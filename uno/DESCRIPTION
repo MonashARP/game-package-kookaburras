@@ -1,16 +1,24 @@
-Package: uno
+Package: unoSim
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Simulate and Score a Game of UNO
 Version: 0.1.0
 Authors@R: c(
-    person(
-      "Jane", "Doe",
-      email = "jane@example.com",
-      role = c("aut", "cre")
-    )
-  )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+  person("Richi", "Susil", email = "Rsus0004@student.monash.edu"),
+  person("Pooja", "Rajendran Raju", email = "praj0022@monash.student.edu"),
+  person("Dhanshree", "Dhrafani", email = "ddhr0001@monash.student.edu")
+)
+Description: This package allows users to simulate a multiplayer UNO game,
+  including deck creation, card dealing, turn simulation, and scoring.
+License: MIT
 Encoding: UTF-8
-LazyData: true
+RoxygenNote: 7.3.1
+Imports:
+  dplyr,
+  purrr,
+  tibble,
+  tidyr
+Suggests:
+  testthat,
+  knitr,
+  rmarkdown
+VignetteBuilder: knitr
