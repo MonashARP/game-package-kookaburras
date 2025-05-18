@@ -85,3 +85,18 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
     turn <- (turn + direction - 1) %% n_players + 1
   }
 }
+#' Simulate a full UNO game
+#'
+#' @param n_players Number of players (Assuming as 4).
+#' @return Final game state including announcing winners.
+#' @export
+play_game <- function(n_players = 4) {
+  setup <- setup_game(n_players)
+  play_turns_loop(
+    hands = setup$hands,
+    deck = setup$deck,
+    discard = setup$discard,
+    direction = setup$direction,
+    turn = setup$turn
+  )
+}
