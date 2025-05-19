@@ -85,3 +85,4 @@ deal_hands <- function(deck, n_players = 4) {
     discard = discard
   ))
 }
+
