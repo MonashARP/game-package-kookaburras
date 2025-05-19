@@ -2,16 +2,14 @@ Package: unoSim
 Type: Package
 Title: Simulate and Score a Game of UNO
 Version: 0.1.0
-Authors@R: c(
-  person("Richi", "Susil", email = "Rsus0004@student.monash.edu"),
-  person("Pooja", "Rajendran Raju", email = "praj0022@monash.student.edu"),
-  person("Dhanshree", "Dhrafani", email = "ddhr0001@monash.student.edu")
-)
+Authors@R: c(person("Richi", "Susil", email = "Rsus0004@student.monash.edu", role = c("aut", "cre")),
+  person("Pooja", "Rajendran Raju", email = "praj0022@student.monash.edu", role = c("aut", "cre")),
+  person("Dhanshree", "Dhrafani", email = "ddhr0001@student.monash.edu", role = c("aut", "cre")))
 Description: This package allows users to simulate a multiplayer UNO game,
   including deck creation, card dealing, turn simulation, and scoring.
 License: MIT
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Imports:
   dplyr,
   purrr,
