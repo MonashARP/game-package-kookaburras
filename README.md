@@ -111,5 +111,9 @@ devtools::test()
 
  - Compatibility for multiple player sizes (2 to 4)
  
+## Learn More
+
+For full documentation, usage guides, and vignettes, visit the [**UNO Package Website**](https://monasharp.github.io/game-package-kookaburras/).
+
 
 
