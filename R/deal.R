@@ -57,10 +57,6 @@
 deal_hands <- function(deck, n_players = 4) {
 
 
-  n_cards_per_player <- 7
-  total_cards_needed <- n_players * n_cards_per_player
-  max_players <- floor((nrow(deck) - 1) / n_cards_per_player)
-
   # Argument validations
   if (!is.data.frame(deck)) {
     stop("`deck` must be a data frame.")
@@ -71,6 +67,9 @@ deal_hands <- function(deck, n_players = 4) {
     stop("`n_players` must be a single positive whole number (≥ 2). Character, factor, or decimal values are not allowed.")
   }
 
+  n_cards_per_player <- 7
+  total_cards_needed <- n_players * n_cards_per_player
+  max_players <- floor((nrow(deck) - 1) / n_cards_per_player)
 
   if (n_players > max_players) {
     stop(paste0(
