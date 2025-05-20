@@ -1,0 +1,45 @@
+---
+title: "uno: Multiplayer UNO Game in R"
+author: "Richi Susil Jacob, Pooja Rajendran Raju, Dhanshree Dhrafani"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{unosim: Multiplayer UNO Game in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### What is UNO?
+
+UNO is a multiplayer simulation package in R. It simulates all aspects of a standard UNO game including:
+
+-   Shuffling and dealing cards
+
+-   Turn-based game logic with direction changes
+
+-   Full support for action cards (Skip, Reverse, +2, Wild, Wild Draw 4)
+
+-   Automatic winner detection and scoring
+
+```{r}
+library(uno)
+
+```
+
+### Installation
+
+```{r}
+# If not already installed
+install.packages("devtools")
+
+# Install from GitHub (replace with your actual repo)
+devtools::install_github("MonashARP/game-package-kookaburras", subdir = "uno")
+
+```
+
