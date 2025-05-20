@@ -80,19 +80,30 @@ or <code><a href="play_game.html">play_game</a></code> to simulate gameplay.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create initial game state for 4 players</span></span></span>
 <span class="r-in"><span><span class="va">game_state</span> <span class="op">&lt;-</span> <span class="fu">setup_game</span><span class="op">(</span>n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in expand_grid(color = colors, value = as.character(numbers)) %&gt;%     mutate(type = "number", times = if_else(value == "0", 1L,         2L)) %&gt;% uncount(times):</span> could not find function "%&gt;%"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># View the structure of output</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">game_state</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'game_state' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "hands"     "deck"      "discard"   "direction" "turn"     </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Access Player 1’s hand</span></span></span>
 <span class="r-in"><span><span class="va">game_state</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_1</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'game_state' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   color  value      type  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> yellow 4          number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> red    1          number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> green  3          number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> wild   wild_draw4 wild  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> green  +2         action</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> green  8          number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> blue   3          number</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># View initial discard card</span></span></span>
 <span class="r-in"><span><span class="va">game_state</span><span class="op">$</span><span class="va">discard</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'game_state' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   color value type  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> green 5     number</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

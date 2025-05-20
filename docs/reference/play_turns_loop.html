@@ -98,7 +98,6 @@ where you want to experiment with specific starting states.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Full setup and simulation step-by-step</span></span></span>
 <span class="r-in"><span><span class="va">state</span> <span class="op">&lt;-</span> <span class="fu"><a href="setup_game.html">setup_game</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in expand_grid(color = colors, value = as.character(numbers)) %&gt;%     mutate(type = "number", times = if_else(value == "0", 1L,         2L)) %&gt;% uncount(times):</span> could not find function "%&gt;%"</span>
 <span class="r-in"><span><span class="va">outcome</span> <span class="op">&lt;-</span> <span class="fu">play_turns_loop</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  hands <span class="op">=</span> <span class="va">state</span><span class="op">$</span><span class="va">hands</span>,</span></span>
 <span class="r-in"><span>  deck <span class="op">=</span> <span class="va">state</span><span class="op">$</span><span class="va">deck</span>,</span></span>
@@ -106,9 +105,9 @@ where you want to experiment with specific starting states.</p>
 <span class="r-in"><span>  direction <span class="op">=</span> <span class="va">state</span><span class="op">$</span><span class="va">direction</span>,</span></span>
 <span class="r-in"><span>  turn <span class="op">=</span> <span class="va">state</span><span class="op">$</span><span class="va">turn</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'state' not found</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Player_4 wins!</span>
 <span class="r-in"><span><span class="va">outcome</span><span class="op">$</span><span class="va">winner</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'outcome' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Player_4"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

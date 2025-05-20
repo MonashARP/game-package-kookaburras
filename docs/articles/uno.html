@@ -60,27 +60,230 @@ Jacob, Pooja Rajendran Raju, Dhanshree Dhrafani</h4>
 
     
     
-<div class="section level3">
-<h3 id="what-is-uno">What is UNO?<a class="anchor" aria-label="anchor" href="#what-is-uno"></a>
-</h3>
-<p>UNO is a multiplayer simulation package in R. It simulates all
-aspects of a standard UNO game including:</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>The uno package simulates a full multiplayer UNO game using realistic
+rules and automatic CPU-driven turns.</p>
+<p>It includes:</p>
 <ul>
-<li><p>Shuffling and dealing cards</p></li>
-<li><p>Turn-based game logic with direction changes</p></li>
-<li><p>Full support for action cards (Skip, Reverse, +2, Wild, Wild Draw
+<li><p>Shuffling and dealing a full UNO deck</p></li>
+<li><p>Turn-based logic with direction reversal</p></li>
+<li><p>Support for action cards (Skip, Reverse, +2, Wild, Wild Draw
 4)</p></li>
-<li><p>Automatic winner detection and scoring</p></li>
+<li><p>Automatic winner detection</p></li>
+<li><p>Final scoring with summary output</p></li>
+<li><p>Ideal for teaching game simulations, functional programming, or
+AI experimentation.</p></li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the development version of uno from GitHub using:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">uno</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Install devtools if not already installed</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Installing package into '/private/var/folders/mv/bhgkq2ns75sf84kzz32njn980000gn/T/RtmpJRoyTd/temp_libpath409753ba2a84'</span></span>
+<span><span class="co">#&gt; (as 'lib' is unspecified)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The downloaded binary packages are in</span></span>
+<span><span class="co">#&gt;  /var/folders/mv/bhgkq2ns75sf84kzz32njn980000gn/T//RtmpOQtRE3/downloaded_packages</span></span>
+<span></span>
+<span><span class="co"># Install uno from GitHub</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"MonashARP/game-package-kookaburras"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Using github PAT from envvar GITHUB_PAT. Use `gitcreds::gitcreds_set()` and unset GITHUB_PAT in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.</span></span>
+<span><span class="co">#&gt; Downloading GitHub repo MonashARP/game-package-kookaburras@HEAD</span></span>
+<span><span class="co">#&gt; cli         (3.6.4  -&gt; 3.6.5 ) [CRAN]</span></span>
+<span><span class="co">#&gt; utf8        (1.2.4  -&gt; 1.2.5 ) [CRAN]</span></span>
+<span><span class="co">#&gt; generics    (0.1.3  -&gt; 0.1.4 ) [CRAN]</span></span>
+<span><span class="co">#&gt; tinytex     (0.56   -&gt; 0.57  ) [CRAN]</span></span>
+<span><span class="co">#&gt; textshaping (1.0.0  -&gt; 1.0.1 ) [CRAN]</span></span>
+<span><span class="co">#&gt; systemfonts (1.2.2  -&gt; 1.2.3 ) [CRAN]</span></span>
+<span><span class="co">#&gt; scales      (1.3.0  -&gt; 1.4.0 ) [CRAN]</span></span>
+<span><span class="co">#&gt; data.table  (1.17.0 -&gt; 1.17.2) [CRAN]</span></span>
+<span><span class="co">#&gt; Installing 8 packages: cli, utf8, generics, tinytex, textshaping, systemfonts, scales, data.table</span></span>
+<span><span class="co">#&gt; Installing packages into '/private/var/folders/mv/bhgkq2ns75sf84kzz32njn980000gn/T/RtmpJRoyTd/temp_libpath409753ba2a84'</span></span>
+<span><span class="co">#&gt; (as 'lib' is unspecified)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The downloaded binary packages are in</span></span>
+<span><span class="co">#&gt;  /var/folders/mv/bhgkq2ns75sf84kzz32njn980000gn/T//RtmpOQtRE3/downloaded_packages</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="color: #00BBBB;">R CMD build</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; * checking for file ‘/private/var/folders/mv/bhgkq2ns75sf84kzz32njn980000gn/T/RtmpOQtRE3/remotes4e097dc345f1/MonashARP-game-package-kookaburras-c536476/DESCRIPTION’ ... OK</span></span>
+<span><span class="co">#&gt; * preparing ‘uno’:</span></span>
+<span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
+<span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
+<span><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
+<span><span class="co">#&gt; * building ‘uno_0.1.0.tar.gz’</span></span>
+<span><span class="co">#&gt; Installing package into '/private/var/folders/mv/bhgkq2ns75sf84kzz32njn980000gn/T/RtmpJRoyTd/temp_libpath409753ba2a84'</span></span>
+<span><span class="co">#&gt; (as 'lib' is unspecified)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="create-a-full-uno-deck">Create a Full UNO Deck<a class="anchor" aria-label="anchor" href="#create-a-full-uno-deck"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deck</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_uno_deck.html">create_uno_deck</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">deck</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
+<span><span class="co">#&gt;   color value   type  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> blue  +2      action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> blue  +2      action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> blue  reverse action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> blue  reverse action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> blue  skip    action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> blue  skip    action</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">deck</span><span class="op">)</span>  <span class="co"># Should return 108</span></span>
+<span><span class="co">#&gt; [1] 108</span></span></code></pre></div>
+<p>This generates a standard 108-card deck including <strong>number
+cards</strong> (0–9), <strong>action cards</strong> (Skip, Reverse, +2),
+and <strong>wild cards</strong> (Wild, Wild Draw 4).</p>
+</div>
+<div class="section level2">
+<h2 id="deal-hands-to-players">Deal Hands to Players<a class="anchor" aria-label="anchor" href="#deal-hands-to-players"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/deal_hands.html">deal_hands</a></span><span class="op">(</span><span class="va">deck</span>, n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Explore hands</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">deal</span><span class="op">$</span><span class="va">hands</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Player_1" "Player_2" "Player_3" "Player_4"</span></span>
+<span><span class="va">deal</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 3</span></span></span>
+<span><span class="co">#&gt;   color  value type  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> green  7     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> yellow 6     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> red    6     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> blue   9     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> red    3     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> yellow 0     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> red    2     number</span></span>
+<span></span>
+<span><span class="co"># View discard pile</span></span>
+<span><span class="va">deal</span><span class="op">$</span><span class="va">discard</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
+<span><span class="co">#&gt;   color value   type  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> blue  reverse action</span></span></code></pre></div>
+<p>Each player is dealt 7 cards. The function returns the hands, updated
+deck, and one card placed into the discard pile.</p>
+</div>
+<div class="section level2">
+<h2 id="simulate-a-full-game">Simulate a Full Game<a class="anchor" aria-label="anchor" href="#simulate-a-full-game"></a>
+</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/play_game.html">play_game</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Player_2 wins!</span></span>
+<span></span>
+<span><span class="co"># View winner</span></span>
+<span><span class="va">result</span><span class="op">$</span><span class="va">winner</span></span>
+<span><span class="co">#&gt; [1] "Player_2"</span></span>
+<span></span>
+<span><span class="co"># Discard pile preview</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">discard</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
+<span><span class="co">#&gt;   color  value   type  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> yellow 8       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> yellow 9       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> red    reverse action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> red    1       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> red    1       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> red    reverse action</span></span></code></pre></div>
+<p>The game runs automatically until one player wins by emptying their
+hand. All actions (skip, draw, reverse) are handled by the engine.</p>
+</div>
+<div class="section level2">
+<h2 id="score-the-game">Score the Game<a class="anchor" aria-label="anchor" href="#score-the-game"></a>
+</h2>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Player_2 Player_1 Player_3 Player_4 </span></span>
+<span><span class="co">#&gt;        0        2        3        7</span></span></code></pre></div>
+<p>Ranks players based on cards remaining. Winner has 0, others are
+sorted.</p>
+<div class="section level3">
+<h3 id="visual-summary">Visual Summary<a class="anchor" aria-label="anchor" href="#visual-summary"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot</a></span><span class="op">(</span><span class="fu"><a href="../reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>,</span>
+<span>        col <span class="op">=</span> <span class="st">"steelblue"</span>,</span>
+<span>        main <span class="op">=</span> <span class="st">"Final Card Counts per Player"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="uno_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h3 id="access-individual-results">Access Individual Results<a class="anchor" aria-label="anchor" href="#access-individual-results"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># devtools::install_github("...")</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">uno</span><span class="op">)</span></span></code></pre></div>
+<p>You can inspect any player’s hand:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_2</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 variables: color &lt;chr&gt;, value &lt;chr&gt;, type &lt;chr&gt;</span></span></span></code></pre></div>
+<p>Or check the full discard pile history:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">discard</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 30 × 3</span></span></span>
+<span><span class="co">#&gt;    color value type  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> red   4     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> red   9     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> blue  9     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> red   +2    action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> red   8     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> green wild  wild  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> green 8     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> green 2     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> green 7     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> red   8     number</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 20 more rows</span></span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="available-functions">Available Functions<a class="anchor" aria-label="anchor" href="#available-functions"></a>
+</h2>
+<table class="table">
+<thead><tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code><a href="../reference/create_uno_deck.html">create_uno_deck()</a></code></td>
+<td>Generate a 108-card UNO deck</td>
+</tr>
+<tr class="even">
+<td><code><a href="../reference/deal_hands.html">deal_hands()</a></code></td>
+<td>Deal 7 cards to each player</td>
+</tr>
+<tr class="odd">
+<td><code><a href="../reference/setup_game.html">setup_game()</a></code></td>
+<td>Initialize hands, deck, discard, turn state</td>
+</tr>
+<tr class="even">
+<td><code><a href="../reference/play_turns_loop.html">play_turns_loop()</a></code></td>
+<td>Turn-by-turn gameplay engine</td>
+</tr>
+<tr class="odd">
+<td><code><a href="../reference/play_game.html">play_game()</a></code></td>
+<td>Full simulation: setup + play to winner</td>
+</tr>
+<tr class="even">
+<td><code><a href="../reference/score_game.html">score_game()</a></code></td>
+<td>Rank players based on final hand sizes</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="whats-next">What’s Next<a class="anchor" aria-label="anchor" href="#whats-next"></a>
+</h2>
+<ul>
+<li><p>“UNO” call penalty</p></li>
+<li><p>Deck reshuffling when draw pile is exhausted</p></li>
+<li><p>Optional player interactivity (CLI or Shiny)</p></li>
+<li><p>Usage of more than one deck</p></li>
+</ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
