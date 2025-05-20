@@ -14,7 +14,8 @@ Imports:
   dplyr,
   purrr,
   tibble,
-  tidyr
+  tidyr,
+  tidyverse
 Suggests:
   testthat,
   knitr,

@@ -1,61 +1,57 @@
 #' Create a Complete UNO Deck
 #'
 #' Constructs a full UNO card deck consisting of 108 cards, following official game rules.
-#' The function generates all standard components: number cards (0–9), action cards (Skip, Reverse, +2),
-#' and wild cards (Wild, Wild Draw 4). This is the foundational step in setting up a UNO game simulation.
+#' This includes number cards (0–9), action cards (Skip, Reverse, +2), and wild cards (Wild, Wild Draw 4).
+#' The resulting deck is returned as a tidy tibble and is sorted by color, type, and value.
 #'
-#' For each of the four main colors (red, green, blue, yellow), the deck includes:
+#' Each of the four colors (\code{red}, \code{green}, \code{blue}, \code{yellow}) includes:
 #' \itemize{
-#'   \item One copy of the number card 0
-#'   \item Two copies of each number card from 1 to 9
-#'   \item Two copies of each action card: \code{"skip"}, \code{"reverse"}, and \code{"+2"}
+#'   \item One \code{0} card
+#'   \item Two of each number card from \code{1–9}
+#'   \item Two of each action card: \code{"skip"}, \code{"reverse"}, \code{"+2"}
 #' }
-#' In addition to the color-specific cards, the deck contains:
+#'
+#' Additionally:
 #' \itemize{
 #'   \item Four \code{"wild"} cards
 #'   \item Four \code{"wild_draw4"} cards
 #' }
 #'
-#' The resulting deck is sorted by color, card type, and value for readability and is ready for dealing via
-#' \code{\link{deal_hands}} or gameplay via \code{\link{play_game}}.
-#'
 #' @details
-#' The UNO deck is generated using a data frame expansion approach powered by \code{expand_grid()} and
-#' \code{dplyr} tools. Number cards are replicated using a conditional multiplier to meet UNO rules. \cr
-#' This function is designed to be reproducible and efficient for simulations and testing. \cr
-#' It returns a tibble suitable for direct use in the \code{\link{deal_hands}} function or shuffling workflows.
+#' - This function uses \code{expand_grid()} and \code{uncount()} to generate and replicate UNO cards. \cr
+#' - Number and action cards are repeated according to official UNO rules. \cr
+#' - The function returns a tibble with 108 cards structured for use in simulations. \cr
 #'
-#' @return A tibble (data frame) with exactly 108 rows and 3 columns:
+#' This deck can be passed directly to downstream functions such as \code{\link{deal_hands}} or \code{\link{play_game}}.
+#'
+#' @return
+#' A tibble with exactly 108 rows and 3 columns:
 #' \itemize{
-#'   \item \strong{color} – Character. Card color: one of \code{"red"}, \code{"green"}, \code{"blue"}, \code{"yellow"}, or \code{"wild"}
-#'   \item \strong{value} – Character. Either a number (as string), action (e.g. \code{"reverse"}), or wild type
-#'   \item \strong{type} – Character. Card type: one of \code{"number"}, \code{"action"}, or \code{"wild"}
+#'   \item \strong{color} – Card color: one of \code{"red"}, \code{"green"}, \code{"blue"}, \code{"yellow"}, or \code{"wild"}
+#'   \item \strong{value} – Card value: a string representing number, action, or wild type (e.g., \code{"5"}, \code{"+2"}, \code{"wild_draw4"})
+#'   \item \strong{type} – Card type: one of \code{"number"}, \code{"action"}, or \code{"wild"}
 #' }
 #'
 #' @examples
-#' # Generate the full UNO deck
+#' # Generate the UNO deck
 #' deck <- create_uno_deck()
 #'
-#' # Check number of cards
+#' # Validate the total card count
 #' nrow(deck)  # Should return 108
 #'
-#' # Summary by type
+#' # Check card distribution
 #' table(deck$type)
 #'
-#' # Check unique card colors
+#' # Preview color types
 #' unique(deck$color)
 #'
-#' # Preview the first few rows
-#' head(deck)
+#' # Use the deck to deal to players
+#' hands <- deal_hands(deck, n_players = 4)
+#' sapply(hands$hands, nrow)
 #'
-#' # Use with deal_hands()
-#' dealt <- deal_hands(deck, n_players = 4)
-#' lapply(dealt$hands, head)
-#'
-#'
-#' @return A tibble with columns: color, value, and type
-#' @importFrom dplyr mutate bind_rows arrange if_else
+#' @importFrom tibble tibble
 #' @importFrom tidyr expand_grid uncount
+#' @importFrom dplyr mutate bind_rows arrange if_else
 #' @importFrom magrittr %>%
 #' @export
 create_uno_deck <- function() {
@@ -83,10 +79,10 @@ create_uno_deck <- function() {
     uncount(2)
 
   wild_cards <- tibble(color = "wild", value = wilds, type = "wild") %>%
-  uncount(4)
+    uncount(4)
 
   deck <- bind_rows(number_cards, action_cards, wild_cards) %>%
-  arrange(color, type, value)
+    arrange(color, type, value)
 
   return(deck)
 
