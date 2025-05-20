@@ -13,29 +13,125 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-### What is UNO?
-
-UNO is a multiplayer simulation package in R. It simulates all aspects of a standard UNO game including:
-
--   Shuffling and dealing cards
-
--   Turn-based game logic with direction changes
-
--   Full support for action cards (Skip, Reverse, +2, Wild, Wild Draw 4)
-
--   Automatic winner detection and scoring
-
-```{r}
-library(uno)
-
-```
-
-### Installation
-
-```{r}
-# devtools::install_github("...")
 library(uno)
 ```
 
+## Introduction
+
+The uno package simulates a full multiplayer UNO game using realistic rules and automatic CPU-driven turns.
+
+It includes:
+
+-   Shuffling and dealing a full UNO deck
+
+-   Turn-based logic with direction reversal
+
+-   Support for action cards (Skip, Reverse, +2, Wild, Wild Draw 4)
+
+-   Automatic winner detection
+
+-   Final scoring with summary output
+
+-   Ideal for teaching game simulations, functional programming, or AI experimentation.
+
+## Installation
+
+You can install the development version of uno from GitHub using:
+
+```{r}
+# Install devtools if not already installed
+install.packages("devtools")
+
+# Install uno from GitHub
+devtools::install_github("MonashARP/game-package-kookaburras")
+```
+
+## Create a Full UNO Deck
+
+```{r}
+deck <- create_uno_deck()
+head(deck)
+nrow(deck)  # Should return 108
+```
+
+This generates a standard 108-card deck including **number cards** (0–9), **action cards** (Skip, Reverse, +2), and **wild cards** (Wild, Wild Draw 4).
+
+## Deal Hands to Players
+
+```{r}
+deal <- deal_hands(deck, n_players = 4)
+
+# Explore hands
+names(deal$hands)
+deal$hands$Player_1
+
+# View discard pile
+deal$discard
+```
+
+Each player is dealt 7 cards. The function returns the hands, updated deck, and one card placed into the discard pile.
+
+## Simulate a Full Game
+
+```{r}
+result <- play_game()
+
+# View winner
+result$winner
+
+# Discard pile preview
+tail(result$discard)
+```
+
+The game runs automatically until one player wins by emptying their hand. All actions (skip, draw, reverse) are handled by the engine.
+
+## Score the Game
+
+```{r}
+score_game(result)
+```
+
+Ranks players based on cards remaining. Winner has 0, others are sorted.
+
+### Visual Summary
+
+```{r}
+barplot(score_game(result),
+        col = "steelblue",
+        main = "Final Card Counts per Player")
+```
+
+### Access Individual Results
+
+You can inspect any player's hand:
+
+```{r}
+result$hands$Player_2
+```
+
+Or check the full discard pile history:
+
+```{r}
+result$discard
+```
+
+## Available Functions
+
+| Function            | Description                                 |
+| ------------------- | ------------------------------------------- |
+| `create_uno_deck()` | Generate a 108-card UNO deck                |
+| `deal_hands()`      | Deal 7 cards to each player                 |
+| `setup_game()`      | Initialize hands, deck, discard, turn state |
+| `play_turns_loop()` | Turn-by-turn gameplay engine                |
+| `play_game()`       | Full simulation: setup + play to winner     |
+| `score_game()`      | Rank players based on final hand sizes      |
+
+##  What's Next
+
+ - "UNO" call penalty
+
+ - Deck reshuffling when draw pile is exhausted
+
+ - Optional player interactivity (CLI or Shiny)
+
+ - Usage of more than one deck
