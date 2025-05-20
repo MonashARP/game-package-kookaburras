@@ -1,4 +1,4 @@
-Package: unoSim
+Package: uno
 Type: Package
 Title: Simulate and Score a Game of UNO
 Version: 0.1.0

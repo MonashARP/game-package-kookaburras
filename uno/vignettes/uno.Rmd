@@ -3,7 +3,7 @@ title: "uno: Multiplayer UNO Game in R"
 author: "Richi Susil Jacob, Pooja Rajendran Raju, Dhanshree Dhrafani"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{unosim: Multiplayer UNO Game in R}
+  %\VignetteIndexEntry{uno: Multiplayer UNO Game in R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -35,11 +35,7 @@ library(uno)
 ### Installation
 
 ```{r}
-# If not already installed
-install.packages("devtools")
-
-# Install from GitHub (replace with your actual repo)
-devtools::install_github("MonashARP/game-package-kookaburras", subdir = "uno")
-
+# devtools::install_github("...")
+library(uno)
 ```
 
