@@ -7,55 +7,31 @@
 play_game(n_players = 4)
 }
 \arguments{
-\item{n_players}{Integer. Number of players to simulate (default is 4). \cr
-This version supports any number of players ≥2, based on deck capacity. \cr
-\strong{Note:} In future versions of the package, we plan to expand
-support for larger groups with rule adaptations, deck validation,
-and team-based formats.}
+\item{n_players}{Integer. Number of players to simulate. Default is 4.}
 }
 \value{
-A named list with the final game results:
+A named list with:
 \itemize{
-  \item \strong{winner} – Character. Name of the winning player (e.g., \code{"Player_1"}).
-  \item \strong{hands} – Named list of tibbles representing each player’s final hand.
-  Only the winner will have an empty hand.
-  \item \strong{discard} – Tibble showing the full discard pile used throughout the game.
+  \item \strong{winner} – Name of the winning player
+  \item \strong{hands} – Final hand of each player
+  \item \strong{discard} – Final discard pile
 }
 }
 \description{
-Runs a full UNO game simulation from setup to finish, returning the final
-game outcome. Internally, this function calls \code{\link{setup_game}} to
-initialize the deck, deal cards, and configure play direction and turn order.
-It then executes the gameplay loop using \code{\link{play_turns_loop}} until
-one player wins by discarding all their cards.
+Combines setup and gameplay to simulate a full UNO match from start to finish.
+This is the easiest entry point for users to run a game in one line.
 }
 \details{
-This function is the most user-friendly entry point and is ideal for batch simulations,
-gameplay testing, educational demos, or scoring.
-
-
-This function performs two main stages:
+This function performs two stages:
 \itemize{
-  \item \strong{Game initialization} – \code{\link{setup_game}} shuffles the deck, deals hands, and sets turn order.
-  \item \strong{Gameplay loop} – \code{\link{play_turns_loop}} simulates turns until one player wins.
+  \item \strong{Game setup} using \code{\link{setup_game}}
+  \item \strong{Turn simulation} using \code{\link{play_turns_loop}}
 }
-
-The result can be passed to \code{\link{score_game}} for post-game analysis and ranking.
 }
 \examples{
-# Run a complete game
 result <- play_game(n_players = 4)
-
-# Extract winner
 result$winner
-
-# Check final card counts per player
 sapply(result$hands, nrow)
-
-# View last card played
 tail(result$discard)
-
-# Score and rank players
-score_game(result)
 
 }

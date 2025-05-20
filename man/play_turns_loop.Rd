@@ -7,55 +7,47 @@
 play_turns_loop(hands, deck, discard, direction, turn)
 }
 \arguments{
-\item{hands}{A named list of tibbles representing each player’s hand.
-Each tibble must have columns \code{color}, \code{value}, and \code{type}.}
+\item{hands}{A named list of tibbles (one per player), with each tibble containing
+columns \code{color}, \code{value}, and \code{type}.}
 
-\item{deck}{A tibble representing the remaining draw pile.
-Cards are removed from here when players must draw.}
+\item{deck}{A tibble representing the draw pile.}
 
-\item{discard}{A tibble representing the discard pile.
-The last row is treated as the top card in play.}
+\item{discard}{A tibble representing the discard pile.}
 
-\item{direction}{An integer indicating turn order.
-\code{1} for clockwise (default), \code{-1} for counter-clockwise.}
+\item{direction}{Integer: 1 = clockwise, -1 = counter-clockwise.}
 
-\item{turn}{Integer. The current player’s turn index (1-based).
-This is updated automatically within the loop.}
+\item{turn}{Integer (1-based): index of the current player.}
 }
 \value{
-A named list with the following components:
+A named list:
 \itemize{
-  \item \strong{winner} – A character string. Name of the winning player (e.g., \code{"Player_3"}).
-  \item \strong{hands} – A named list of tibbles showing the final hands of all players.
-  Only the winner has zero cards.
-  \item \strong{discard} – A tibble representing the final discard pile, including the last played card.
+  \item \strong{winner} – Character string (e.g., \code{"Player_2"}), or \code{NULL} if deck runs out
+  \item \strong{hands} – Final state of each player's hand (winner has 0 cards)
+  \item \strong{discard} – Final discard pile including the last played card
 }
 }
 \description{
-Executes the main gameplay loop of UNO by iterating through player turns until a winner is found.
-Handles all playable card logic, card draws, action cards (Skip, Reverse, +2), and wild card behavior,
-including forced draws and color changes.
+Runs the main loop of a UNO game where each player takes a turn until one wins
+or the draw pile is exhausted. Handles matching, drawing, and playing cards
+with full support for action and wild card effects.
 }
 \details{
-This function is best used internally by \code{\link{play_game}} or during custom simulations
-where you want to experiment with specific starting states.
+- Handles special cards: \code{"skip"}, \code{"reverse"}, \code{"+2"}, \code{"wild"}, \code{"wild_draw4"} \cr
+- If no playable card, player draws one from the draw pile \cr
+- Wilds automatically assign a random color after play \cr
+- If the deck is exhausted, the game ends with no winner (to be improved)
 
-
-- Handles action cards: \code{"skip"}, \code{"reverse"}, \code{"+2"}, \code{"wild"}, \code{"wild_draw4"} \cr
-- If no playable card, player draws 1 from deck \cr
-- Turn logic accounts for action card effects (e.g., next player drawing, reversing direction) \cr
-- Wilds automatically assign a random color
+\strong{Note:} In a future version, deck reshuffling and wild color choice prompts
+will be added to make the simulation more robust.
 }
 \examples{
-# Full setup and simulation step-by-step
-state <- setup_game()
-outcome <- play_turns_loop(
+state <- setup_game(4)
+play_turns_loop(
   hands = state$hands,
   deck = state$deck,
   discard = state$discard,
   direction = state$direction,
   turn = state$turn
 )
-outcome$winner
 
 }

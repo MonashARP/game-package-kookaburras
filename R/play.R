@@ -4,41 +4,35 @@
 #' dealing 7 cards to each player, drawing the first discard card, and initializing
 #' gameplay direction and player turn order.
 #'
-#' This is typically the first step before calling \code{\link{play_turns_loop}}
-#' or \code{\link{play_game}} to simulate gameplay.
+#' This function is typically the first step before calling \code{\link{play_turns_loop}}
+#' or \code{\link{play_game}} to simulate a full game.
 #'
-#' @param n_players Integer. Number of players to initialize. Default is 4. \cr
-#'   This version supports any value ≥ 2 (limited by card count). \cr
-#'   \strong{Note:} Future versions aim to support extended player formats with
-#'   rule adaptations and multi-deck configurations.
+#' @param n_players Integer. Number of players to initialize. Must be ≥ 2. Default is 4. \cr
+#'   This version supports dynamic randomization of direction and starting player. \cr
+#'   \strong{Note:} Future versions may restore support for deterministic turn order and
+#'   clockwise play by default, with options to override.
 #'
 #' @details
-#' - The function shuffles a standard 108-card deck via \code{\link{create_uno_deck}} \cr
-#' - Cards are dealt using \code{\link{deal_hands}}, one per player for 7 rounds \cr
-#' - One card is drawn to start the discard pile \cr
-#' - Turn direction is set to clockwise (\code{1}); turn index starts from Player 1
+#' - Shuffles the deck from \code{\link{create_uno_deck}} \cr
+#' - Deals 7 cards to each player \cr
+#' - One card is drawn as the first discard \cr
+#' - Direction is randomly chosen (1 = clockwise, -1 = counter-clockwise) \cr
+#' - Starting player is randomly selected from the available players
 #'
-#' @return A named list containing:
+#' @return A named list:
 #' \itemize{
-#'   \item \strong{hands} – Named list of tibbles, one per player, each with 7 cards
-#'   \item \strong{deck} – Remaining deck (after hands and discard) used as the draw pile
-#'   \item \strong{discard} – One-row tibble showing the top discard card
-#'   \item \strong{direction} – Integer. Initial play direction. \code{1} = clockwise, \code{-1} = counter-clockwise
-#'   \item \strong{turn} – Integer. Starting player's index (1-based)
+#'   \item \strong{hands} – Named list of player hands (each a tibble with 7 cards)
+#'   \item \strong{deck} – Remaining deck (after dealing and discard)
+#'   \item \strong{discard} – One-row tibble for top discard card
+#'   \item \strong{direction} – Integer: 1 or -1
+#'   \item \strong{turn} – Integer: randomly chosen starting player's index
 #' }
 #'
 #' @examples
-#' # Create initial game state for 4 players
-#' game_state <- setup_game(n_players = 4)
-#'
-#' # View the structure of output
-#' names(game_state)
-#'
-#' # Access Player 1’s hand
-#' game_state$hands$Player_1
-#'
-#' # View initial discard card
-#' game_state$discard
+#' state <- setup_game(n_players = 4)
+#' names(state)
+#' state$hands$Player_1
+#' state$discard
 #'
 #' @export
 setup_game <- function(n_players) {
@@ -67,53 +61,42 @@ setup_game <- function(n_players) {
 
 #' Simulate UNO Turn-by-Turn Gameplay
 #'
-#' Executes the main gameplay loop of UNO by iterating through player turns until a winner is found.
-#' Handles all playable card logic, card draws, action cards (Skip, Reverse, +2), and wild card behavior,
-#' including forced draws and color changes.
+#' Runs the main loop of a UNO game where each player takes a turn until one wins
+#' or the draw pile is exhausted. Handles matching, drawing, and playing cards
+#' with full support for action and wild card effects.
 #'
-#' This function is best used internally by \code{\link{play_game}} or during custom simulations
-#' where you want to experiment with specific starting states.
-#'
-#' @param hands A named list of tibbles representing each player’s hand.
-#'   Each tibble must have columns \code{color}, \code{value}, and \code{type}.
-#'
-#' @param deck A tibble representing the remaining draw pile.
-#'   Cards are removed from here when players must draw.
-#'
+#' @param hands A named list of tibbles (one per player), with each tibble containing
+#'   columns \code{color}, \code{value}, and \code{type}.
+#' @param deck A tibble representing the draw pile.
 #' @param discard A tibble representing the discard pile.
-#'   The last row is treated as the top card in play.
-#'
-#' @param direction An integer indicating turn order.
-#'   \code{1} for clockwise (default), \code{-1} for counter-clockwise.
-#'
-#' @param turn Integer. The current player’s turn index (1-based).
-#'   This is updated automatically within the loop.
+#' @param direction Integer: 1 = clockwise, -1 = counter-clockwise.
+#' @param turn Integer (1-based): index of the current player.
 #'
 #' @details
-#' - Handles action cards: \code{"skip"}, \code{"reverse"}, \code{"+2"}, \code{"wild"}, \code{"wild_draw4"} \cr
-#' - If no playable card, player draws 1 from deck \cr
-#' - Turn logic accounts for action card effects (e.g., next player drawing, reversing direction) \cr
-#' - Wilds automatically assign a random color
+#' - Handles special cards: \code{"skip"}, \code{"reverse"}, \code{"+2"}, \code{"wild"}, \code{"wild_draw4"} \cr
+#' - If no playable card, player draws one from the draw pile \cr
+#' - Wilds automatically assign a random color after play \cr
+#' - If the deck is exhausted, the game ends with no winner (to be improved)
 #'
-#' @return A named list with the following components:
+#' \strong{Note:} In a future version, deck reshuffling and wild color choice prompts
+#' will be added to make the simulation more robust.
+#'
+#' @return A named list:
 #' \itemize{
-#'   \item \strong{winner} – A character string. Name of the winning player (e.g., \code{"Player_3"}).
-#'   \item \strong{hands} – A named list of tibbles showing the final hands of all players.
-#'   Only the winner has zero cards.
-#'   \item \strong{discard} – A tibble representing the final discard pile, including the last played card.
+#'   \item \strong{winner} – Character string (e.g., \code{"Player_2"}), or \code{NULL} if deck runs out
+#'   \item \strong{hands} – Final state of each player's hand (winner has 0 cards)
+#'   \item \strong{discard} – Final discard pile including the last played card
 #' }
 #'
 #' @examples
-#' # Full setup and simulation step-by-step
-#' state <- setup_game()
-#' outcome <- play_turns_loop(
+#' state <- setup_game(4)
+#' play_turns_loop(
 #'   hands = state$hands,
 #'   deck = state$deck,
 #'   discard = state$discard,
 #'   direction = state$direction,
 #'   turn = state$turn
 #' )
-#' outcome$winner
 #'
 #' @export
 play_turns_loop <- function(hands, deck, discard, direction, turn) {
@@ -192,55 +175,33 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
     turn <- (turn + direction - 1) %% n_players + 1
   }
 }
+
 #' Simulate a Complete UNO Game
 #'
-#' Runs a full UNO game simulation from setup to finish, returning the final
-#' game outcome. Internally, this function calls \code{\link{setup_game}} to
-#' initialize the deck, deal cards, and configure play direction and turn order.
-#' It then executes the gameplay loop using \code{\link{play_turns_loop}} until
-#' one player wins by discarding all their cards.
+#' Combines setup and gameplay to simulate a full UNO match from start to finish.
+#' This is the easiest entry point for users to run a game in one line.
 #'
-#' This function is the most user-friendly entry point and is ideal for batch simulations,
-#' gameplay testing, educational demos, or scoring.
-#'
-#' @param n_players Integer. Number of players to simulate (default is 4). \cr
-#'   This version supports any number of players ≥2, based on deck capacity. \cr
-#'   \strong{Note:} In future versions of the package, we plan to expand
-#'   support for larger groups with rule adaptations, deck validation,
-#'   and team-based formats.
+#' @param n_players Integer. Number of players to simulate. Default is 4.
 #'
 #' @details
-#' This function performs two main stages:
+#' This function performs two stages:
 #' \itemize{
-#'   \item \strong{Game initialization} – \code{\link{setup_game}} shuffles the deck, deals hands, and sets turn order.
-#'   \item \strong{Gameplay loop} – \code{\link{play_turns_loop}} simulates turns until one player wins.
+#'   \item \strong{Game setup} using \code{\link{setup_game}}
+#'   \item \strong{Turn simulation} using \code{\link{play_turns_loop}}
 #' }
 #'
-#' The result can be passed to \code{\link{score_game}} for post-game analysis and ranking.
-#'
-#' @return A named list with the final game results:
+#' @return A named list with:
 #' \itemize{
-#'   \item \strong{winner} – Character. Name of the winning player (e.g., \code{"Player_1"}).
-#'   \item \strong{hands} – Named list of tibbles representing each player’s final hand.
-#'   Only the winner will have an empty hand.
-#'   \item \strong{discard} – Tibble showing the full discard pile used throughout the game.
+#'   \item \strong{winner} – Name of the winning player
+#'   \item \strong{hands} – Final hand of each player
+#'   \item \strong{discard} – Final discard pile
 #' }
 #'
 #' @examples
-#' # Run a complete game
 #' result <- play_game(n_players = 4)
-#'
-#' # Extract winner
 #' result$winner
-#'
-#' # Check final card counts per player
 #' sapply(result$hands, nrow)
-#'
-#' # View last card played
 #' tail(result$discard)
-#'
-#' # Score and rank players
-#' score_game(result)
 #'
 #' @export
 play_game <- function(n_players = 4) {

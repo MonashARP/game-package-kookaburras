@@ -7,19 +7,19 @@
 setup_game(n_players)
 }
 \arguments{
-\item{n_players}{Integer. Number of players to initialize. Default is 4. \cr
-This version supports any value ≥ 2 (limited by card count). \cr
-\strong{Note:} Future versions aim to support extended player formats with
-rule adaptations and multi-deck configurations.}
+\item{n_players}{Integer. Number of players to initialize. Must be ≥ 2. Default is 4. \cr
+This version supports dynamic randomization of direction and starting player. \cr
+\strong{Note:} Future versions may restore support for deterministic turn order and
+clockwise play by default, with options to override.}
 }
 \value{
-A named list containing:
+A named list:
 \itemize{
-  \item \strong{hands} – Named list of tibbles, one per player, each with 7 cards
-  \item \strong{deck} – Remaining deck (after hands and discard) used as the draw pile
-  \item \strong{discard} – One-row tibble showing the top discard card
-  \item \strong{direction} – Integer. Initial play direction. \code{1} = clockwise, \code{-1} = counter-clockwise
-  \item \strong{turn} – Integer. Starting player's index (1-based)
+  \item \strong{hands} – Named list of player hands (each a tibble with 7 cards)
+  \item \strong{deck} – Remaining deck (after dealing and discard)
+  \item \strong{discard} – One-row tibble for top discard card
+  \item \strong{direction} – Integer: 1 or -1
+  \item \strong{turn} – Integer: randomly chosen starting player's index
 }
 }
 \description{
@@ -28,26 +28,20 @@ dealing 7 cards to each player, drawing the first discard card, and initializing
 gameplay direction and player turn order.
 }
 \details{
-This is typically the first step before calling \code{\link{play_turns_loop}}
-or \code{\link{play_game}} to simulate gameplay.
+This function is typically the first step before calling \code{\link{play_turns_loop}}
+or \code{\link{play_game}} to simulate a full game.
 
 
-- The function shuffles a standard 108-card deck via \code{\link{create_uno_deck}} \cr
-- Cards are dealt using \code{\link{deal_hands}}, one per player for 7 rounds \cr
-- One card is drawn to start the discard pile \cr
-- Turn direction is set to clockwise (\code{1}); turn index starts from Player 1
+- Shuffles the deck from \code{\link{create_uno_deck}} \cr
+- Deals 7 cards to each player \cr
+- One card is drawn as the first discard \cr
+- Direction is randomly chosen (1 = clockwise, -1 = counter-clockwise) \cr
+- Starting player is randomly selected from the available players
 }
 \examples{
-# Create initial game state for 4 players
-game_state <- setup_game(n_players = 4)
-
-# View the structure of output
-names(game_state)
-
-# Access Player 1’s hand
-game_state$hands$Player_1
-
-# View initial discard card
-game_state$discard
+state <- setup_game(n_players = 4)
+names(state)
+state$hands$Player_1
+state$discard
 
 }
