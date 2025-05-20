@@ -38,7 +38,7 @@ It includes:
 
 You can install the development version of uno from GitHub using:
 
-```{r}
+```{r eval=FALSE}
 # Install devtools if not already installed
 install.packages("devtools")
 

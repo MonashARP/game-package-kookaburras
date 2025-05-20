@@ -55,34 +55,47 @@
 #'
 #' @export
 deal_hands <- function(deck, n_players = 4) {
-  # Deck Shuffling
-  deck <- deck[sample(nrow(deck)), ]
 
-  #   Intialize individual hands of players
-  hands <- vector("list", n_players)
-  for (i in 1:n_players) {
-    hands[[i]] <- deck[0, ]
+
+  n_cards_per_player <- 7
+  total_cards_needed <- n_players * n_cards_per_player
+  max_players <- floor((nrow(deck) - 1) / n_cards_per_player)
+
+  # Argument validations
+  if (!is.data.frame(deck)) {
+    stop("`deck` must be a data frame.")
   }
+
+  if (!is.numeric(n_players) || is.character(n_players) || is.factor(n_players) ||
+      length(n_players) != 1 || n_players %% 1 != 0 || n_players < 2) {
+    stop("`n_players` must be a single positive whole number (≥ 2). Character, factor, or decimal values are not allowed.")
+  }
+
+
+  if (n_players > max_players) {
+    stop(paste0(
+      "Too many players: With ", nrow(deck),
+      " cards, you can only deal 7 cards to up to ", max_players, " players."
+    ))
+  }
+
+  # Shuffle and deal
+  shuffled_deck <- deck[sample(nrow(deck)), ]
+
+  dealt <- shuffled_deck[1:total_cards_needed, , drop = FALSE]
+  remaining_deck <- shuffled_deck[(total_cards_needed + 1):nrow(shuffled_deck), , drop = FALSE]
+
+  # Create player hands
+  hands <- split(dealt, rep(1:n_players, each = n_cards_per_player))
   names(hands) <- paste0("Player_", 1:n_players)
 
-  #Distribute cards per rounds
-  for (round in 1:7) {
-    for (i in 1:n_players) {
-      hands[[i]] <- rbind(hands[[i]], deck[1, ])
-      deck <- deck[-1, ]
-    }
-  }
-
-  # Remainig cards
-  discard <- deck[1, , drop = FALSE]
-
-  #Revome 1st card after show
-  deck <- deck[-1, ]
+  # Discard card and remaining deck
+  discard <- remaining_deck[1, , drop = FALSE]
+  draw_pile <- remaining_deck[-1, , drop = FALSE]
 
   return(list(
     hands = hands,
-    deck = deck,
+    deck = draw_pile,
     discard = discard
   ))
 }
-
