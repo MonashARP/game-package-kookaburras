@@ -13,9 +13,8 @@ deal_hands(deck, n_players = 4)
 
 \item{n_players}{An integer indicating the number of players in the game.
 The default is 4, which reflects the standard size for quick simulations. \cr
-This version supports any number of players (≥2) based on deck size. \cr
-\strong{Note:} Future versions of this package aim to support larger player
-counts with built-in validation and dynamic rule adaptation.}
+This version supports any number of players (≥2), provided there are enough cards in the deck. \cr
+\strong{Note:} Future versions of this package may include support for extended formats or customizable hands.}
 }
 \value{
 A named list with the following components:
@@ -27,21 +26,21 @@ A named list with the following components:
 }
 \description{
 Randomly shuffles a UNO deck and distributes 7 cards to each player.
-Cards are dealt in 7 sequential rounds, one card at a time to each player,
-maintaining fairness in order. After dealing, the function also initializes the
-discard pile by placing one card from the remaining deck face-up.
+Cards are dealt in one batch per player to ensure speed and fairness.
+After dealing, the function also initializes the discard pile by placing
+one card from the remaining deck face-up.
 }
 \details{
 This function is commonly used as the first step in setting up a game using
 \code{\link{setup_game}} or \code{\link{play_game}}.
 
 
-- The cards are dealt using a nested loop: one card per player per round, repeated 7 times. \cr
+- Cards are shuffled randomly before being dealt. \cr
+- 7 cards are dealt to each player in a single batch (not round-robin). \cr
 - Each player's hand is stored in a named list (e.g., \code{Player_1}, \code{Player_2}, etc.). \cr
-- One card is moved from the remaining deck to serve as the opening discard card. \cr
-
-The result can be passed directly to downstream functions like
-\code{\link{play_turns_loop}} to simulate gameplay.
+- One card is moved from the remaining deck to initialize the discard pile. \cr
+- The rest of the deck is returned as the draw pile. \cr
+- Internal validation ensures enough cards exist to support the requested number of players. \cr
 }
 \examples{
 # Generate a new UNO deck
