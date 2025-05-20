@@ -98,7 +98,7 @@ where you want to experiment with specific starting states.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Full setup and simulation step-by-step</span></span></span>
 <span class="r-in"><span><span class="va">state</span> <span class="op">&lt;-</span> <span class="fu"><a href="setup_game.html">setup_game</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in expand_grid(color = colors, value = as.character(numbers)) %&gt;%     mutate(type = "number") %&gt;% group_by(value) %&gt;% mutate(replication = if_else(value ==     "0", 1, 2)) %&gt;% ungroup() %&gt;% slice(rep(1:n(), replication)) %&gt;%     select(-replication):</span> could not find function "%&gt;%"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in expand_grid(color = colors, value = as.character(numbers)) %&gt;%     mutate(type = "number", times = if_else(value == "0", 1L,         2L)) %&gt;% uncount(times):</span> could not find function "%&gt;%"</span>
 <span class="r-in"><span><span class="va">outcome</span> <span class="op">&lt;-</span> <span class="fu">play_turns_loop</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  hands <span class="op">=</span> <span class="va">state</span><span class="op">$</span><span class="va">hands</span>,</span></span>
 <span class="r-in"><span>  deck <span class="op">=</span> <span class="va">state</span><span class="op">$</span><span class="va">deck</span>,</span></span>

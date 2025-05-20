@@ -1,12 +1,3 @@
-# Load required tidyverse libraries
-library(tidyverse)
-
-# Defines the components of the deck
-colors <- c("red", "green", "blue", "yellow")
-numbers <- 0:9
-actions <- c("skip", "reverse", "+2")
-wilds <- c("wild", "wild_draw4")
-
 #' Create a Complete UNO Deck
 #'
 #' Constructs a full UNO card deck consisting of 108 cards, following official game rules.
@@ -61,19 +52,27 @@ wilds <- c("wild", "wild_draw4")
 #' dealt <- deal_hands(deck, n_players = 4)
 #' lapply(dealt$hands, head)
 #'
+#'
+#' @return A tibble with columns: color, value, and type
+#' @importFrom dplyr mutate bind_rows arrange if_else
+#' @importFrom tidyr expand_grid uncount
+#' @importFrom magrittr %>%
 #' @export
 create_uno_deck <- function() {
+
+  # Defines the components of the deck
+  colors <- c("red", "green", "blue", "yellow")
+  numbers <- 0:9
+  actions <- c("skip", "reverse", "+2")
+  wilds <- c("wild", "wild_draw4")
+
   # Generating Number Cards
   number_cards <- expand_grid(
     color = colors,
     value = as.character(numbers)
-  ) %>%
-    mutate(type = "number") %>%
-    group_by(value) %>%
-    mutate(replication = if_else(value == "0", 1, 2)) %>%
-    ungroup() %>%
-    slice(rep(1:n(), replication)) %>%
-    select(-replication)
+  )  %>%
+    mutate(type = "number", times = if_else(value == "0", 1L, 2L)) %>%
+    uncount(times)
 
   # Generated the Action Cards
   action_cards <- expand_grid(
@@ -81,19 +80,20 @@ create_uno_deck <- function() {
     value = actions
   ) %>%
     mutate(type = "action") %>%
-    slice(rep(1:n(), 2))
+    uncount(2)
 
-  #  Generating the Wild Cards
-  wild_cards <- expand_grid(
-    color = "wild",
-    value = wilds
-  ) %>%
-    mutate(type = "wild") %>%
-    slice(rep(1:n(), 4))
+  wild_cards <- tibble(color = "wild", value = wilds, type = "wild") %>%
+  uncount(4)
 
-  # Combining All Cards into a Deck for the Game
   deck <- bind_rows(number_cards, action_cards, wild_cards) %>%
-    arrange(color, type, value)
+  arrange(color, type, value)
 
   return(deck)
+
+
 }
+
+
+
+
+

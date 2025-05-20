@@ -13,6 +13,8 @@ A tibble (data frame) with exactly 108 rows and 3 columns:
   \item \strong{value} – Character. Either a number (as string), action (e.g. \code{"reverse"}), or wild type
   \item \strong{type} – Character. Card type: one of \code{"number"}, \code{"action"}, or \code{"wild"}
 }
+
+A tibble with columns: color, value, and type
 }
 \description{
 Constructs a full UNO card deck consisting of 108 cards, following official game rules.
@@ -60,5 +62,6 @@ head(deck)
 # Use with deal_hands()
 dealt <- deal_hands(deck, n_players = 4)
 lapply(dealt$hands, head)
+
 
 }

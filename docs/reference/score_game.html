@@ -85,7 +85,7 @@ in extended gameplay sessions or Monte Carlo simulations.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Simulate a game with 4 players</span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="play_game.html">play_game</a></span><span class="op">(</span>n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in expand_grid(color = colors, value = as.character(numbers)) %&gt;%     mutate(type = "number") %&gt;% group_by(value) %&gt;% mutate(replication = if_else(value ==     "0", 1, 2)) %&gt;% ungroup() %&gt;% slice(rep(1:n(), replication)) %&gt;%     select(-replication):</span> could not find function "%&gt;%"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in expand_grid(color = colors, value = as.character(numbers)) %&gt;%     mutate(type = "number", times = if_else(value == "0", 1L,         2L)) %&gt;% uncount(times):</span> could not find function "%&gt;%"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Score the game</span></span></span>
 <span class="r-in"><span><span class="fu">score_game</span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
