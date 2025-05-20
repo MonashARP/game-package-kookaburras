@@ -211,11 +211,16 @@ play_game <- function(n_players = 4) {
 
   setup <- setup_game(n_players)
 
-  play_turns_loop(
+  result <- play_turns_loop(
     hands = setup$hands,
     deck = setup$deck,
     discard = setup$discard,
     direction = setup$direction,
     turn = setup$turn
   )
+
+  score_game(result)
+
+  # Return full result (hands, winner, discard)
+  invisible(result)
 }

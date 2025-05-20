@@ -2,56 +2,57 @@
 % Please edit documentation in R/score.R
 \name{score_game}
 \alias{score_game}
-\title{Compute Final UNO Scores}
+\title{Compute and Display Final UNO Scores}
 \usage{
 score_game(game_state)
 }
 \arguments{
-\item{game_state}{A list returned by `play_game()`}
+\item{game_state}{A named list returned by \code{\link{play_game}()} containing:
+\itemize{
+  \item \code{hands} – A named list of tibbles, each representing a player's final hand.
+  \item \code{winner} – Character string of the winning player (e.g., \code{"Player_2"}), or \code{NULL} if no winner.
+  \item \code{reason} – Optional message explaining why the game ended (e.g., deck exhausted).
+}}
 }
 \value{
-A named integer vector where:
+A tibble with 3 columns:
 \describe{
-  \item{Names}{Player names (e.g., \code{"Player_1"}, \code{"Player_2"}, ...)}
-  \item{Values}{Number of cards left in each player's hand. The winner will always have a value of \code{0}.}
+  \item{\strong{Player}}{Character. Player name (e.g., \code{"Player_1"}, \code{"Player_2"}, ...)}
+  \item{\strong{Cards_Remaining}}{Integer. Number of cards remaining in each player’s hand.}
+  \item{\strong{Result}}{Character. \code{"🏆 Winner"} for the winning player, blank for others.}
 }
 
-A tibble with players, cards remaining, and result status (printed).
-        Invisibly returns the summary tibble for programmatic use.
+The summary tibble is returned invisibly (useful for programmatic scoring), but results are also printed.
 }
 \description{
-Calculates and ranks the final scores for each player at the end of a UNO game.
-Scores are determined by counting how many cards remain in each player's hand.
-The player who played all their cards first (i.e., has 0 cards) is the winner.
+Calculates, ranks, and prints the final scores of all players at the end of a UNO game.
+Scores are determined by counting how many cards remain in each player's hand. The winner
+is identified as the player with zero cards.
 }
 \details{
-This function is designed to be called on the output from \code{\link{play_game}()}.
-It returns a named integer vector of remaining card counts per player, sorted
-from the fewest cards to the most.
+This function is typically called after simulating a full game using \code{\link{play_game}()}.
+In addition to returning a summary tibble, it prints a formatted score table and the final hands
+of each player for transparency and post-game analysis.
 
 
-- The result highlights the winner (score of 0), followed by players with remaining cards. \cr
-- The function assumes that \code{game_state$hands} is a named list of tibbles representing
-  each player's hand after the game loop has ended. \cr
-- The sorted output makes it easy to visualize rankings and detect close finishes in competitive analysis or simulations.
+- Each player's hand is evaluated by counting remaining cards. \cr
+- The output tibble ranks players from lowest to highest card count. \cr
+- The result is printed in a user-friendly format showing the winner and all final hands. \cr
+- This is ideal for logging, leaderboard generation, and simulation diagnostics. \cr
 
-This function is useful for summary statistics, ranking output, or leaderboard generation
-in extended gameplay sessions or Monte Carlo simulations.
+\strong{Note:} If no winner exists (e.g., the deck ran out), a warning message is shown.
 }
 \examples{
-# Simulate a game with 4 players
+# Simulate and score a complete game
 result <- play_game(n_players = 4)
-
-# Score the game
 score_game(result)
 
-# Identify winner programmatically
-which(score_game(result) == 0)
+# Get winner programmatically
+winner <- score_game(result) |> dplyr::filter(Result == "🏆 Winner") |> dplyr::pull(Player)
 
-# Visualize ranking
-barplot(score_game(result), main = "UNO Player Scores", col = "skyblue")
-
-
-Summarizes final hands and the winner after `play_game()`.
+# Visualize the score table
+barplot(score_game(result)$Cards_Remaining,
+        names.arg = score_game(result)$Player,
+        col = "skyblue", main = "Final Scores")
 
 }

@@ -67,6 +67,22 @@ This is the easiest entry point for users to run a game in one line.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">play_game</span><span class="op">(</span>n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 🎯 Final Score Summary:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Player Cards_Remaining    Result</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Player_2               0 🏆 Winner</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Player_1               1          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Player_4               2          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Player_3               3          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 🎉 Player_2 had 0 cards left and wins the game!</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 🃏 Final Hands Table:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Player color      value   type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Player_1  wild wild_draw4   wild</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Player_3  blue          9 number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Player_3  wild wild_draw4   wild</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Player_3   red          3 number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Player_4 green       skip action</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Player_4 green          8 number</span>
 <span class="r-in"><span><span class="va">result</span><span class="op">$</span><span class="va">winner</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Player_2"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">hands</span>, <span class="va">nrow</span><span class="op">)</span></span></span>

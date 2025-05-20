@@ -47,7 +47,38 @@
 #'
 #' @export
 score_game <- function(game_state) {
-  scores <- sapply(game_state$hands, nrow)
-  scores <- sort(scores)
-  return(scores)
+  hands <- game_state$hands
+  winner <- game_state$winner
+  reason <- game_state$reason %||% "Game completed"
+
+  player_names <- names(hands)
+  card_counts <- vapply(hands, nrow, integer(1))
+
+  score_table <- tibble(
+    Player = player_names,
+    Cards_Remaining = card_counts,
+    Result = ifelse(player_names == winner, "🏆 Winner", "")
+  ) |>
+    arrange(Cards_Remaining)
+
+  final_hands <- bind_rows(
+    lapply(player_names, function(p) dplyr::mutate(hands[[p]], Player = p)),
+    .id = NULL
+  ) |>
+    dplyr::select(Player, color, value, type)
+
+
+  cat("\n🎯 Final Score Summary:\n")
+  print.data.frame(score_table, row.names = FALSE)
+
+  if (!is.null(winner)) {
+    cat(glue::glue("\n🎉 {winner} had 0 cards left and wins the game!\n"))
+  } else {
+    cat(glue::glue("\n⛔ Game ended without a winner: {reason}\n"))
+  }
+
+  cat("\n🃏 Final Hands Table:\n")
+  print.data.frame(final_hands, row.names = FALSE)
+
+  invisible(score_table)
 }
