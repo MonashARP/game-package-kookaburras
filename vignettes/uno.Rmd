@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(uno)
+library(dplyr)
+
 ```
 
 ## Introduction
@@ -96,9 +98,12 @@ Ranks players based on cards remaining. Winner has 0, others are sorted.
 ### Visual Summary
 
 ```{r}
-barplot(score_game(result),
+scores <- score_game(result)
+barplot(scores$Cards_Remaining,
+        names.arg = scores$Player,
         col = "steelblue",
         main = "Final Card Counts per Player")
+
 ```
 
 ### Access Individual Results

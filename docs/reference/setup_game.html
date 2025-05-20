@@ -52,58 +52,52 @@ gameplay direction and player turn order.</p>
 
 
 <dl><dt id="arg-n-players">n_players<a class="anchor" aria-label="anchor" href="#arg-n-players"></a></dt>
-<dd><p>Integer. Number of players to initialize. Default is 4. <br>
-This version supports any value ≥ 2 (limited by card count). <br><strong>Note:</strong> Future versions aim to support extended player formats with
-rule adaptations and multi-deck configurations.</p></dd>
+<dd><p>Integer. Number of players to initialize. Must be ≥ 2. Default is 4. <br>
+This version supports dynamic randomization of direction and starting player. <br><strong>Note:</strong> Future versions may restore support for deterministic turn order and
+clockwise play by default, with options to override.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A named list containing:</p><ul><li><p><strong>hands</strong> – Named list of tibbles, one per player, each with 7 cards</p></li>
-<li><p><strong>deck</strong> – Remaining deck (after hands and discard) used as the draw pile</p></li>
-<li><p><strong>discard</strong> – One-row tibble showing the top discard card</p></li>
-<li><p><strong>direction</strong> – Integer. Initial play direction. <code>1</code> = clockwise, <code>-1</code> = counter-clockwise</p></li>
-<li><p><strong>turn</strong> – Integer. Starting player's index (1-based)</p></li>
+    <p>A named list:</p><ul><li><p><strong>hands</strong> – Named list of player hands (each a tibble with 7 cards)</p></li>
+<li><p><strong>deck</strong> – Remaining deck (after dealing and discard)</p></li>
+<li><p><strong>discard</strong> – One-row tibble for top discard card</p></li>
+<li><p><strong>direction</strong> – Integer: 1 or -1</p></li>
+<li><p><strong>turn</strong> – Integer: randomly chosen starting player's index</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This is typically the first step before calling <code><a href="play_turns_loop.html">play_turns_loop</a></code>
-or <code><a href="play_game.html">play_game</a></code> to simulate gameplay.</p>
+    <p>This function is typically the first step before calling <code><a href="play_turns_loop.html">play_turns_loop</a></code>
+or <code><a href="play_game.html">play_game</a></code> to simulate a full game.</p>
 
-<p>- The function shuffles a standard 108-card deck via <code><a href="create_uno_deck.html">create_uno_deck</a></code> <br>
-- Cards are dealt using <code><a href="deal_hands.html">deal_hands</a></code>, one per player for 7 rounds <br>
-- One card is drawn to start the discard pile <br>
-- Turn direction is set to clockwise (<code>1</code>); turn index starts from Player 1</p>
+<p>- Shuffles the deck from <code><a href="create_uno_deck.html">create_uno_deck</a></code> <br>
+- Deals 7 cards to each player <br>
+- One card is drawn as the first discard <br>
+- Direction is randomly chosen (1 = clockwise, -1 = counter-clockwise) <br>
+- Starting player is randomly selected from the available players</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create initial game state for 4 players</span></span></span>
-<span class="r-in"><span><span class="va">game_state</span> <span class="op">&lt;-</span> <span class="fu">setup_game</span><span class="op">(</span>n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># View the structure of output</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">game_state</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">state</span> <span class="op">&lt;-</span> <span class="fu">setup_game</span><span class="op">(</span>n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "hands"     "deck"      "discard"   "direction" "turn"     </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Access Player 1’s hand</span></span></span>
-<span class="r-in"><span><span class="va">game_state</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_1</span></span></span>
+<span class="r-in"><span><span class="va">state</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_1</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color  value type  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> yellow 6     number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> yellow 7     number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> yellow 5     number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> green  7     number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> blue   5     number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> blue   3     number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> yellow 4     number</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># View initial discard card</span></span></span>
-<span class="r-in"><span><span class="va">game_state</span><span class="op">$</span><span class="va">discard</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> green  1     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> red    skip  action</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> yellow 7     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> blue   7     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> blue   1     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> yellow 1     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> blue   9     number</span>
+<span class="r-in"><span><span class="va">state</span><span class="op">$</span><span class="va">discard</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color value type  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> blue  3     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> red   7     number</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -168,15 +168,67 @@ hand. All actions (skip, draw, reverse) are handled by the engine.</p>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Player_4 Player_1 Player_2 Player_3 </span></span>
-<span><span class="co">#&gt;        0        2        3        7</span></span></code></pre></div>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 🎯 Final Score Summary:</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 3</span></span></span>
+<span><span class="co">#&gt;   Player   Cards_Remaining Result     </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Player_4               0 <span style="color: #949494;">"</span>🏆 Winner<span style="color: #949494;">"</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Player_1               2 <span style="color: #949494;">""</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Player_2               3 <span style="color: #949494;">""</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Player_3               7 <span style="color: #949494;">""</span>         </span></span>
+<span><span class="co">#&gt; 🎉 Player_4 had 0 cards left and wins the game!</span></span>
+<span><span class="co">#&gt; 🃏 Final Hands Table:</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 4</span></span></span>
+<span><span class="co">#&gt;    Player   color  value   type  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Player_1 red    8       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Player_1 red    +2      action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Player_2 blue   9       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Player_2 green  2       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Player_2 red    1       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Player_3 blue   reverse action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Player_3 green  5       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Player_3 yellow 9       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Player_3 green  9       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Player_3 blue   2       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Player_3 green  4       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Player_3 blue   4       number</span></span></code></pre></div>
 <p>Ranks players based on cards remaining. Winner has 0, others are
 sorted.</p>
 <div class="section level3">
 <h3 id="visual-summary">Visual Summary<a class="anchor" aria-label="anchor" href="#visual-summary"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot</a></span><span class="op">(</span><span class="fu"><a href="../reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 🎯 Final Score Summary:</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 3</span></span></span>
+<span><span class="co">#&gt;   Player   Cards_Remaining Result     </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Player_4               0 <span style="color: #949494;">"</span>🏆 Winner<span style="color: #949494;">"</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Player_1               2 <span style="color: #949494;">""</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Player_2               3 <span style="color: #949494;">""</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Player_3               7 <span style="color: #949494;">""</span>         </span></span>
+<span><span class="co">#&gt; 🎉 Player_4 had 0 cards left and wins the game!</span></span>
+<span><span class="co">#&gt; 🃏 Final Hands Table:</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 4</span></span></span>
+<span><span class="co">#&gt;    Player   color  value   type  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Player_1 red    8       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Player_1 red    +2      action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Player_2 blue   9       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Player_2 green  2       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Player_2 red    1       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Player_3 blue   reverse action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Player_3 green  5       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Player_3 yellow 9       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Player_3 green  9       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Player_3 blue   2       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Player_3 green  4       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Player_3 blue   4       number</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot</a></span><span class="op">(</span><span class="va">scores</span><span class="op">$</span><span class="va">Cards_Remaining</span>,</span>
+<span>        names.arg <span class="op">=</span> <span class="va">scores</span><span class="op">$</span><span class="va">Player</span>,</span>
 <span>        col <span class="op">=</span> <span class="st">"steelblue"</span>,</span>
 <span>        main <span class="op">=</span> <span class="st">"Final Card Counts per Player"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="uno_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>

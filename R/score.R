@@ -40,9 +40,46 @@
 #' # Visualize ranking
 #' barplot(score_game(result), main = "UNO Player Scores", col = "skyblue")
 #'
+#'
+#' Summarizes final hands and the winner after `play_game()`.
+#'
+#' @param game_state A list returned by `play_game()`
+#'
+#' @return A tibble with players, cards remaining, and result status (printed).
+#'         Invisibly returns the summary tibble for programmatic use.
 #' @export
 score_game <- function(game_state) {
-  scores <- sapply(game_state$hands, nrow)
-  scores <- sort(scores)
-  return(scores)
+  hands <- game_state$hands
+  winner <- game_state$winner
+  reason <- game_state$reason %||% "Game completed"
+
+  player_names <- names(hands)
+  card_counts <- vapply(hands, nrow, integer(1))
+
+  score_table <- tibble::tibble(
+    Player = player_names,
+    Cards_Remaining = card_counts,
+    Result = ifelse(player_names == winner, "🏆 Winner", "")
+  ) |>
+    dplyr::arrange(Cards_Remaining)
+
+  final_hands <- dplyr::bind_rows(
+    lapply(player_names, function(p) dplyr::mutate(hands[[p]], Player = p)),
+    .id = NULL
+  ) |>
+    dplyr::select(Player, color, value, type)
+
+  cat("\n🎯 Final Score Summary:\n")
+  print(score_table, n = nrow(score_table))
+
+  if (!is.null(winner)) {
+    cat(glue::glue("\n🎉 {winner} had 0 cards left and wins the game!\n"))
+  } else {
+    cat(glue::glue("\n⛔ Game ended without a winner: {reason}\n"))
+  }
+
+  cat("\n🃏 Final Hands Table:\n")
+  print(final_hands, n = nrow(final_hands))
+
+  invisible(score_table)
 }

@@ -52,9 +52,7 @@ The player who played all their cards first (i.e., has 0 cards) is the winner.</
 
 
 <dl><dt id="arg-game-state">game_state<a class="anchor" aria-label="anchor" href="#arg-game-state"></a></dt>
-<dd><p>A list containing the final game state as returned by
-<code><a href="play_game.html">play_game</a>()</code>. Must contain a named list element called <code>hands</code>,
-where each element represents a player’s hand (a tibble of remaining cards).</p></dd>
+<dd><p>A list returned by `play_game()`</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -66,7 +64,9 @@ where each element represents a player’s hand (a tibble of remaining cards).</
 <dd><p>Number of cards left in each player's hand. The winner will always have a value of <code>0</code>.</p></dd>
 
 
-</dl></div>
+</dl><p>A tibble with players, cards remaining, and result status (printed).
+        Invisibly returns the summary tibble for programmatic use.</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function is designed to be called on the output from <code><a href="play_game.html">play_game</a>()</code>.
@@ -83,24 +83,7 @@ in extended gameplay sessions or Monte Carlo simulations.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Simulate a game with 4 players</span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="play_game.html">play_game</a></span><span class="op">(</span>n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Score the game</span></span></span>
-<span class="r-in"><span><span class="fu">score_game</span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Player_1 Player_3 Player_2 Player_4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0        1        2        8 </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Identify winner programmatically</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu">score_game</span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Player_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        1 </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Visualize ranking</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot</a></span><span class="op">(</span><span class="fu">score_game</span><span class="op">(</span><span class="va">result</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"UNO Player Scores"</span>, col <span class="op">=</span> <span class="st">"skyblue"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="score_game-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
+
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

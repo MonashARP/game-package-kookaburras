@@ -7,9 +7,7 @@
 score_game(game_state)
 }
 \arguments{
-\item{game_state}{A list containing the final game state as returned by
-\code{\link{play_game}()}. Must contain a named list element called \code{hands},
-where each element represents a player’s hand (a tibble of remaining cards).}
+\item{game_state}{A list returned by `play_game()`}
 }
 \value{
 A named integer vector where:
@@ -17,6 +15,9 @@ A named integer vector where:
   \item{Names}{Player names (e.g., \code{"Player_1"}, \code{"Player_2"}, ...)}
   \item{Values}{Number of cards left in each player's hand. The winner will always have a value of \code{0}.}
 }
+
+A tibble with players, cards remaining, and result status (printed).
+        Invisibly returns the summary tibble for programmatic use.
 }
 \description{
 Calculates and ranks the final scores for each player at the end of a UNO game.
@@ -49,5 +50,8 @@ which(score_game(result) == 0)
 
 # Visualize ranking
 barplot(score_game(result), main = "UNO Player Scores", col = "skyblue")
+
+
+Summarizes final hands and the winner after `play_game()`.
 
 }
