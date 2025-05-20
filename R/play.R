@@ -41,14 +41,27 @@
 #' game_state$discard
 #'
 #' @export
-setup_game <- function(n_players = 4) {
-  state <- deal_hands(create_uno_deck(), n_players)
+setup_game <- function(n_players) {
+  deck <- create_uno_deck()
+  deck <- deck[sample(nrow(deck)), , drop = FALSE]
+
+  # Deal hands
+  hands <- split(deck[1:(n_players * 7), , drop = FALSE],
+                 rep(1:n_players, each = 7))
+  names(hands) <- paste0("Player_", 1:n_players)
+
+  # Remaining deck and discard
+  deck_index <- n_players * 7 + 1
+  discard <- deck[deck_index, , drop = FALSE]
+  deck_index <- deck_index + 1
+  deck <- deck[deck_index:nrow(deck), , drop = FALSE]
+
   list(
-    hands = state$hands,
-    deck = state$deck,
-    discard = state$discard,
-    direction = 1,
-    turn = 1
+    hands = hands,
+    deck = deck,
+    discard = discard,
+    direction = sample(c(1, -1), 1),
+    turn = sample(1:n_players, 1)
   )
 }
 
@@ -105,11 +118,13 @@ setup_game <- function(n_players = 4) {
 #' @export
 play_turns_loop <- function(hands, deck, discard, direction, turn) {
   n_players <- length(hands)
+  deck_index <- 1
+  deck_size <- nrow(deck)
 
   repeat {
     current_player <- paste0("Player_", turn)
     hand <- hands[[current_player]]
-    top_card <- tail(discard, 1)
+    top_card <- discard[nrow(discard), ]
 
     playable <- which(
       hand$color == top_card$color |
@@ -118,54 +133,65 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
     )
 
     if (length(playable) == 0) {
-      if (nrow(deck) == 0) stop("Deck exhausted!")
-      drawn <- deck[1, , drop = FALSE]
-      deck <- deck[-1, ]
+      if (deck_index > deck_size) {
+        return(list(
+          winner = NULL,
+          hands = hands,
+          discard = discard,
+          reason = "Deck exhausted"
+        ))
+      }
+      drawn <- deck[deck_index, , drop = FALSE]
+      deck_index <- deck_index + 1
       hand <- rbind(hand, drawn)
     } else {
       play_idx <- sample(playable, 1)
-      played_card <- hand[play_idx, ]
+      played_card <- hand[play_idx, , drop = FALSE]
       discard <- rbind(discard, played_card)
-      hand <- hand[-play_idx, ]
+      hand <- hand[-play_idx, , drop = FALSE]
 
-      # Action card handling
       if (played_card$value == "skip") {
         turn <- (turn + direction - 1) %% n_players + 1
       } else if (played_card$value == "reverse") {
         direction <- -direction
       } else if (played_card$value == "+2") {
         next_player <- paste0("Player_", (turn + direction - 1) %% n_players + 1)
-        if (nrow(deck) >= 2) {
-          hands[[next_player]] <- rbind(hands[[next_player]], deck[1:2, ])
-          deck <- deck[-(1:2), ]
+        n_draw <- min(2, deck_size - deck_index + 1)
+        if (n_draw > 0) {
+          drawn <- deck[deck_index:(deck_index + n_draw - 1), , drop = FALSE]
+          hands[[next_player]] <- rbind(hands[[next_player]], drawn)
+          deck_index <- deck_index + n_draw
         }
         turn <- (turn + direction - 1) %% n_players + 1
       } else if (played_card$value == "wild_draw4") {
         next_player <- paste0("Player_", (turn + direction - 1) %% n_players + 1)
-        if (nrow(deck) >= 4) {
-          hands[[next_player]] <- rbind(hands[[next_player]], deck[1:4, ])
-          deck <- deck[-(1:4), ]
+        n_draw <- min(4, deck_size - deck_index + 1)
+        if (n_draw > 0) {
+          drawn <- deck[deck_index:(deck_index + n_draw - 1), , drop = FALSE]
+          hands[[next_player]] <- rbind(hands[[next_player]], drawn)
+          deck_index <- deck_index + n_draw
         }
         turn <- (turn + direction - 1) %% n_players + 1
       }
 
-      # Wild card color selection
       if (played_card$value %in% c("wild", "wild_draw4")) {
-        discard[nrow(discard), "color"] <- sample(c("red", "blue", "green", "yellow"), 1)
+        discard[nrow(discard), "color"] <- sample(c("red", "green", "blue", "yellow"), 1)
       }
     }
 
     hands[[current_player]] <- hand
 
     if (nrow(hand) == 0) {
-      message(current_player, " wins!")
-      return(list(winner = current_player, hands = hands, discard = discard))
+      return(list(
+        winner = current_player,
+        hands = hands,
+        discard = discard
+      ))
     }
 
     turn <- (turn + direction - 1) %% n_players + 1
   }
 }
-
 #' Simulate a Complete UNO Game
 #'
 #' Runs a full UNO game simulation from setup to finish, returning the final
@@ -218,7 +244,12 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
 #'
 #' @export
 play_game <- function(n_players = 4) {
+  if (!is.numeric(n_players) || length(n_players) != 1 || n_players %% 1 != 0 || n_players < 2) {
+    stop("`n_players` must be a single whole number (≥ 2).")
+  }
+
   setup <- setup_game(n_players)
+
   play_turns_loop(
     hands = setup$hands,
     deck = setup$deck,

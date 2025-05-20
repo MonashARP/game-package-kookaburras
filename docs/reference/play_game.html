@@ -85,33 +85,32 @@ gameplay testing, educational demos, or scoring.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Run a complete game</span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">play_game</span><span class="op">(</span>n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Player_3 wins!</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Extract winner</span></span></span>
 <span class="r-in"><span><span class="va">result</span><span class="op">$</span><span class="va">winner</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Player_3"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Player_2"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Check final card counts per player</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">hands</span>, <span class="va">nrow</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Player_1 Player_2 Player_3 Player_4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        4        2        0        2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        1        0        3        2 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># View last card played</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">discard</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   color value   type  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> blue  9       number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> blue  5       number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> blue  6       number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> blue  reverse action</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> green reverse action</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> green 7       number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   color  value type  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> blue   5     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> blue   5     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> yellow 9     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> yellow 2     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> blue   4     number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> green  wild  wild  </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Score and rank players</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Player_3 Player_2 Player_4 Player_1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        0        2        2        4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Player_2 Player_1 Player_4 Player_3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        0        1        2        3 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

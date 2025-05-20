@@ -144,23 +144,22 @@ deck, and one card placed into the discard pile.</p>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/play_game.html">play_game</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Player_3 wins!</span></span>
 <span></span>
 <span><span class="co"># View winner</span></span>
 <span><span class="va">result</span><span class="op">$</span><span class="va">winner</span></span>
-<span><span class="co">#&gt; [1] "Player_3"</span></span>
+<span><span class="co">#&gt; [1] "Player_4"</span></span>
 <span></span>
 <span><span class="co"># Discard pile preview</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">discard</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
 <span><span class="co">#&gt;   color value   type  </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> red   7       number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> green 7       number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> green 5       number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> blue  5       number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> blue  4       number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> blue  reverse action</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> blue  reverse action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> green 6       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> green 1       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> green 7       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> green 5       number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> green reverse action</span></span></code></pre></div>
 <p>The game runs automatically until one player wins by emptying their
 hand. All actions (skip, draw, reverse) are handled by the engine.</p>
 </div>
@@ -169,8 +168,8 @@ hand. All actions (skip, draw, reverse) are handled by the engine.</p>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Player_3 Player_1 Player_2 Player_4 </span></span>
-<span><span class="co">#&gt;        0        3        4        6</span></span></code></pre></div>
+<span><span class="co">#&gt; Player_4 Player_1 Player_2 Player_3 </span></span>
+<span><span class="co">#&gt;        0        2        3        7</span></span></code></pre></div>
 <p>Ranks players based on cards remaining. Winner has 0, others are
 sorted.</p>
 <div class="section level3">
@@ -188,30 +187,29 @@ sorted.</p>
 <p>You can inspect any player’s hand:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_2</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
 <span><span class="co">#&gt;   color value type  </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> green 2     number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> green 5     number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> red   1     number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> red   0     number</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> blue  9     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> green 2     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> red   1     number</span></span></code></pre></div>
 <p>Or check the full discard pile history:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">discard</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 33 × 3</span></span></span>
-<span><span class="co">#&gt;    color  value      type  </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> red    4          number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> red    8          number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> red    reverse    action</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> red    +2         action</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> red    wild_draw4 wild  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> yellow wild       wild  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> yellow 8          number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> yellow skip       action</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> yellow 3          number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> red    1          number</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 23 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 31 × 3</span></span></span>
+<span><span class="co">#&gt;    color value      type  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> red   4          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> red   reverse    action</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> green 6          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> blue  wild       wild  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> blue  8          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> green wild_draw4 wild  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> green 4          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> blue  0          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> red   1          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> blue  6          number</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 21 more rows</span></span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

@@ -4,7 +4,7 @@
 \alias{setup_game}
 \title{Initialize a UNO Game Session}
 \usage{
-setup_game(n_players = 4)
+setup_game(n_players)
 }
 \arguments{
 \item{n_players}{Integer. Number of players to initialize. Default is 4. \cr
