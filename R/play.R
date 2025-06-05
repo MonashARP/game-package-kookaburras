@@ -186,7 +186,7 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
 
   list(
     winner = winner,
-    hands = hands,
-    discard = discard
+    hands = lapply(hands, convert_to_card_vctr),
+    discard = convert_to_card_vctr(discard)
   )
 }
