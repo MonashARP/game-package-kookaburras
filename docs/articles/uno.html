@@ -63,18 +63,14 @@ Jacob, Pooja Rajendran Raju, Dhanshree Dhrafani</h4>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The uno package simulates a full multiplayer UNO game using realistic
-rules and automatic CPU-driven turns.</p>
-<p>It includes:</p>
+<p>The uno package lets you simulate a full multiplayer UNO game using
+realistic rules.</p>
+<p>It supports:</p>
 <ul>
-<li><p>Shuffling and dealing a full UNO deck</p></li>
-<li><p>Turn-based logic with direction reversal</p></li>
-<li><p>Support for action cards (Skip, Reverse, +2, Wild, Wild Draw
-4)</p></li>
-<li><p>Automatic winner detection</p></li>
-<li><p>Final scoring with summary output</p></li>
-<li><p>Ideal for teaching game simulations, functional programming, or
-AI experimentation.</p></li>
+<li><p>Full UNO deck generation</p></li>
+<li><p>Dealing hands to players</p></li>
+<li><p>Turn-by-turn play using action and wild cards</p></li>
+<li><p>Winner detection and scoring</p></li>
 </ul>
 </div>
 <div class="section level2">
@@ -95,14 +91,14 @@ AI experimentation.</p></li>
 <code class="sourceCode R"><span><span class="va">deck</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_uno_deck.html">create_uno_deck</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">deck</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
-<span><span class="co">#&gt;   color value   type  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> blue  +2      action</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> blue  +2      action</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> blue  reverse action</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> blue  reverse action</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> blue  skip    action</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> blue  skip    action</span></span>
+<span><span class="co">#&gt;   color value type  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> red   0     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> red   1     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> red   1     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> red   2     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> red   2     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> red   3     number</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">deck</span><span class="op">)</span>  <span class="co"># Should return 108</span></span>
 <span><span class="co">#&gt; [1] 108</span></span></code></pre></div>
 <p>This generates a standard 108-card deck including <strong>number
@@ -122,160 +118,94 @@ and <strong>wild cards</strong> (Wild, Wild Draw 4).</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 3</span></span></span>
 <span><span class="co">#&gt;   color  value type  </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> green  7     number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> blue   8     number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> wild   wild  wild  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> red    3     number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> yellow 6     number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> yellow 6     number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> green  8     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> blue   3     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> green  2     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> yellow 9     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> yellow 3     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> wild   wild  wild  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> wild   wild  wild  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> blue   4     number</span></span>
 <span></span>
 <span><span class="co"># View discard pile</span></span>
 <span><span class="va">deal</span><span class="op">$</span><span class="va">discard</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
-<span><span class="co">#&gt;   color value   type  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> blue  reverse action</span></span></code></pre></div>
-<p>Each player is dealt 7 cards. The function returns the hands, updated
-deck, and one card placed into the discard pile.</p>
+<span><span class="co">#&gt;   color value type  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> red   2     number</span></span></code></pre></div>
+<p>Each player is dealt 7 cards. The function returns:</p>
+<ul>
+<li><p>A named list of player hands</p></li>
+<li><p>The updated deck</p></li>
+<li><p>A starting discard pile with one card</p></li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="how-gameplay-works">How Gameplay Works<a class="anchor" aria-label="anchor" href="#how-gameplay-works"></a>
+</h2>
+<p>The game logic is handled through two main functions:</p>
+<p>-<strong>play_game()</strong> – Runs the full game from start to
+finish</p>
+<p>-<strong>play_turns_loop()</strong> – Internal engine that manages
+turns, checks for playable cards, handles actions, and tracks the
+winner</p>
+<p>The game proceeds automatically until one player finishes all cards.
+If the draw pile runs out before that, the game ends in a draw.</p>
 </div>
 <div class="section level2">
 <h2 id="simulate-a-full-game">Simulate a Full Game<a class="anchor" aria-label="anchor" href="#simulate-a-full-game"></a>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/play_game.html">play_game</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 🎯 Final Score Summary:</span></span>
-<span><span class="co">#&gt;    Player Cards_Remaining    Result</span></span>
-<span><span class="co">#&gt;  Player_4               0 🏆 Winner</span></span>
-<span><span class="co">#&gt;  Player_1               2          </span></span>
-<span><span class="co">#&gt;  Player_2               3          </span></span>
-<span><span class="co">#&gt;  Player_3               7          </span></span>
-<span><span class="co">#&gt; 🎉 Player_4 had 0 cards left and wins the game!</span></span>
-<span><span class="co">#&gt; 🃏 Final Hands Table:</span></span>
-<span><span class="co">#&gt;    Player  color   value   type</span></span>
-<span><span class="co">#&gt;  Player_1    red       8 number</span></span>
-<span><span class="co">#&gt;  Player_1    red      +2 action</span></span>
-<span><span class="co">#&gt;  Player_2   blue       9 number</span></span>
-<span><span class="co">#&gt;  Player_2  green       2 number</span></span>
-<span><span class="co">#&gt;  Player_2    red       1 number</span></span>
-<span><span class="co">#&gt;  Player_3   blue reverse action</span></span>
-<span><span class="co">#&gt;  Player_3  green       5 number</span></span>
-<span><span class="co">#&gt;  Player_3 yellow       9 number</span></span>
-<span><span class="co">#&gt;  Player_3  green       9 number</span></span>
-<span><span class="co">#&gt;  Player_3   blue       2 number</span></span>
-<span><span class="co">#&gt;  Player_3  green       4 number</span></span>
-<span><span class="co">#&gt;  Player_3   blue       4 number</span></span>
 <span></span>
 <span><span class="co"># View winner</span></span>
 <span><span class="va">result</span><span class="op">$</span><span class="va">winner</span></span>
-<span><span class="co">#&gt; [1] "Player_4"</span></span>
+<span><span class="co">#&gt; [1] "Player_1"</span></span>
 <span></span>
 <span><span class="co"># Discard pile preview</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">discard</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
-<span><span class="co">#&gt;   color value   type  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> blue  reverse action</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> green 6       number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> green 1       number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> green 7       number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> green 5       number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> green reverse action</span></span></code></pre></div>
+<span><span class="co">#&gt;   color value type  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> red   wild  wild  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> red   5     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> red   9     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> blue  9     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> blue  1     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> blue  2     number</span></span></code></pre></div>
 <p>The game runs automatically until one player wins by emptying their
 hand. All actions (skip, draw, reverse) are handled by the engine.</p>
-</div>
-<div class="section level2">
-<h2 id="score-the-game">Score the Game<a class="anchor" aria-label="anchor" href="#score-the-game"></a>
-</h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 🎯 Final Score Summary:</span></span>
-<span><span class="co">#&gt;    Player Cards_Remaining    Result</span></span>
-<span><span class="co">#&gt;  Player_4               0 🏆 Winner</span></span>
-<span><span class="co">#&gt;  Player_1               2          </span></span>
-<span><span class="co">#&gt;  Player_2               3          </span></span>
-<span><span class="co">#&gt;  Player_3               7          </span></span>
-<span><span class="co">#&gt; 🎉 Player_4 had 0 cards left and wins the game!</span></span>
-<span><span class="co">#&gt; 🃏 Final Hands Table:</span></span>
-<span><span class="co">#&gt;    Player  color   value   type</span></span>
-<span><span class="co">#&gt;  Player_1    red       8 number</span></span>
-<span><span class="co">#&gt;  Player_1    red      +2 action</span></span>
-<span><span class="co">#&gt;  Player_2   blue       9 number</span></span>
-<span><span class="co">#&gt;  Player_2  green       2 number</span></span>
-<span><span class="co">#&gt;  Player_2    red       1 number</span></span>
-<span><span class="co">#&gt;  Player_3   blue reverse action</span></span>
-<span><span class="co">#&gt;  Player_3  green       5 number</span></span>
-<span><span class="co">#&gt;  Player_3 yellow       9 number</span></span>
-<span><span class="co">#&gt;  Player_3  green       9 number</span></span>
-<span><span class="co">#&gt;  Player_3   blue       2 number</span></span>
-<span><span class="co">#&gt;  Player_3  green       4 number</span></span>
-<span><span class="co">#&gt;  Player_3   blue       4 number</span></span></code></pre></div>
-<p>Ranks players based on cards remaining. Winner has 0, others are
-sorted.</p>
-<div class="section level3">
-<h3 id="visual-summary">Visual Summary<a class="anchor" aria-label="anchor" href="#visual-summary"></a>
-</h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 🎯 Final Score Summary:</span></span>
-<span><span class="co">#&gt;    Player Cards_Remaining    Result</span></span>
-<span><span class="co">#&gt;  Player_4               0 🏆 Winner</span></span>
-<span><span class="co">#&gt;  Player_1               2          </span></span>
-<span><span class="co">#&gt;  Player_2               3          </span></span>
-<span><span class="co">#&gt;  Player_3               7          </span></span>
-<span><span class="co">#&gt; 🎉 Player_4 had 0 cards left and wins the game!</span></span>
-<span><span class="co">#&gt; 🃏 Final Hands Table:</span></span>
-<span><span class="co">#&gt;    Player  color   value   type</span></span>
-<span><span class="co">#&gt;  Player_1    red       8 number</span></span>
-<span><span class="co">#&gt;  Player_1    red      +2 action</span></span>
-<span><span class="co">#&gt;  Player_2   blue       9 number</span></span>
-<span><span class="co">#&gt;  Player_2  green       2 number</span></span>
-<span><span class="co">#&gt;  Player_2    red       1 number</span></span>
-<span><span class="co">#&gt;  Player_3   blue reverse action</span></span>
-<span><span class="co">#&gt;  Player_3  green       5 number</span></span>
-<span><span class="co">#&gt;  Player_3 yellow       9 number</span></span>
-<span><span class="co">#&gt;  Player_3  green       9 number</span></span>
-<span><span class="co">#&gt;  Player_3   blue       2 number</span></span>
-<span><span class="co">#&gt;  Player_3  green       4 number</span></span>
-<span><span class="co">#&gt;  Player_3   blue       4 number</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot</a></span><span class="op">(</span><span class="va">scores</span><span class="op">$</span><span class="va">Cards_Remaining</span>,</span>
-<span>        names.arg <span class="op">=</span> <span class="va">scores</span><span class="op">$</span><span class="va">Player</span>,</span>
-<span>        col <span class="op">=</span> <span class="st">"steelblue"</span>,</span>
-<span>        main <span class="op">=</span> <span class="st">"Final Card Counts per Player"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="uno_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-</div>
+<p><strong>Note:</strong> Wild cards (wild, wild_draw4) appear in the
+discard pile with the color selected by the player who played them. For
+example, a card with value = “wild” and color = “green” means the player
+played a wild and chose green.</p>
 <div class="section level3">
 <h3 id="access-individual-results">Access Individual Results<a class="anchor" aria-label="anchor" href="#access-individual-results"></a>
 </h3>
 <p>You can inspect any player’s hand:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_2</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 3</span></span></span>
 <span><span class="co">#&gt;   color value type  </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> blue  9     number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> green 2     number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> red   1     number</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> green 9     number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> wild  wild  wild</span></span></code></pre></div>
 <p>Or check the full discard pile history:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">discard</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 31 × 3</span></span></span>
-<span><span class="co">#&gt;    color value      type  </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> red   4          number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> red   reverse    action</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> green 6          number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> blue  wild       wild  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> blue  8          number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> green wild_draw4 wild  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> green 4          number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> blue  0          number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> red   1          number</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> blue  6          number</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 21 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 43 × 3</span></span></span>
+<span><span class="co">#&gt;    color  value      type  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> yellow 4          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> yellow 8          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> green  8          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> green  wild_draw4 wild  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> green  2          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> green  9          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> red    9          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> green  wild_draw4 wild  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> green  3          number</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> red    wild_draw4 wild  </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 33 more rows</span></span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -296,20 +226,12 @@ sorted.</p>
 <td>Deal 7 cards to each player</td>
 </tr>
 <tr class="odd">
-<td><code><a href="../reference/setup_game.html">setup_game()</a></code></td>
-<td>Initialize hands, deck, discard, turn state</td>
-</tr>
-<tr class="even">
-<td><code><a href="../reference/play_turns_loop.html">play_turns_loop()</a></code></td>
-<td>Turn-by-turn gameplay engine</td>
-</tr>
-<tr class="odd">
 <td><code><a href="../reference/play_game.html">play_game()</a></code></td>
 <td>Full simulation: setup + play to winner</td>
 </tr>
 <tr class="even">
-<td><code><a href="../reference/score_game.html">score_game()</a></code></td>
-<td>Rank players based on final hand sizes</td>
+<td><code><a href="../reference/play_turns_loop.html">play_turns_loop()</a></code></td>
+<td>Internal game loop handling each player’s turn</td>
 </tr>
 </tbody>
 </table>
@@ -335,7 +257,7 @@ sorted.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

@@ -46,33 +46,40 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="uno">uno<a class="anchor" aria-label="anchor" href="#uno"></a>
+<div class="page-header"><h1 id="uno-multiplayer-uno-game-in-r">
+<code>uno</code>: Multiplayer UNO Game in R<a class="anchor" aria-label="anchor" href="#uno-multiplayer-uno-game-in-r"></a>
 </h1></div>
-<p><code>uno</code> is an R package that simulates a full multiplayer UNO game, including CPU-generated turns, realistic card rules, and winner detection. Built for reproducibility, testing, and fun, it’s ideal for both classroom simulations and package development learning.</p>
-<p>Developed by Team Kookaburras as part of the Monash ETC Advanced R course.</p>
+<p>The <code>uno</code> R package simulates a full multiplayer UNO game using realistic card rules and automated gameplay.</p>
+<p>Designed as part of the <strong>Monash ETC Advanced R course</strong>, this package allows players to experience turn-by-turn logic, action card effects, and winner detection, all within a reproducible and testable R environment.</p>
+<blockquote>
+<p>Developed by Team Kookaburras.</p>
+</blockquote>
 <hr>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Install the development version from GitHub:</p>
+<p>Install the development version directly from GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install devtools if not already installed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Install the uno package</span></span>
+<span><span class="co"># Install uno package from GitHub</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"MonashARP/game-package-kookaburras"</span>, subdir <span class="op">=</span> <span class="st">"uno"</span><span class="op">)</span></span></code></pre></div>
+<hr>
 </div>
 <div class="section level2">
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
 <ul>
-<li><p>Shuffles and builds the full 108-card UNO deck</p></li>
-<li><p>Deals hands fairly across players</p></li>
-<li><p>Fully handles action cards: Skip, Reverse, +2, Wild, and Wild Draw 4</p></li>
-<li><p>Simulates turn-by-turn gameplay</p></li>
-<li><p>Detects the winner and provides end-game scoring</p></li>
-<li><p>Extensively documented and tested</p></li>
+<li>Generates a full UNO deck (108 cards)</li>
+<li>Deals cards fairly to all players</li>
+<li>Handles all action and wild cards</li>
+<li>Simulates turn-by-turn game logic</li>
+<li>Detects winner or deck exhaustion</li>
+<li>Includes internal game loop control</li>
+<li>Documented and unit-tested</li>
 </ul>
+<hr>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
@@ -80,26 +87,32 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">uno</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Create and deal</span></span>
+<span><span class="co"># Create and shuffle the full deck</span></span>
 <span><span class="va">deck</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_uno_deck.html">create_uno_deck</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Deal hands to players</span></span>
 <span><span class="va">deal</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/deal_hands.html">deal_hands</a></span><span class="op">(</span><span class="va">deck</span>, n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Simulate a full game</span></span>
+<span><span class="co"># Simulate a complete game</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/play_game.html">play_game</a></span><span class="op">(</span>n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># View the winner</span></span>
 <span><span class="va">result</span><span class="op">$</span><span class="va">winner</span></span>
 <span></span>
-<span><span class="co"># Score the game</span></span>
-<span><span class="fu"><a href="reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Inspect final hands</span></span>
+<span><span class="va">result</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_2</span></span>
+<span></span>
+<span><span class="co"># Check discard pile history</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">discard</span><span class="op">)</span></span></code></pre></div>
+<hr>
 </div>
 <div class="section level2">
 <h2 id="main-functions">Main Functions<a class="anchor" aria-label="anchor" href="#main-functions"></a>
 </h2>
 <table class="table">
 <colgroup>
-<col width="27%">
-<col width="72%">
+<col width="30%">
+<col width="69%">
 </colgroup>
 <thead><tr class="header">
 <th>Function</th>
@@ -108,77 +121,51 @@
 <tbody>
 <tr class="odd">
 <td><code><a href="reference/create_uno_deck.html">create_uno_deck()</a></code></td>
-<td>Generate and shuffle the 108-card UNO deck</td>
+<td>Generate the 108-card UNO deck</td>
 </tr>
 <tr class="even">
 <td><code><a href="reference/deal_hands.html">deal_hands()</a></code></td>
-<td>Deal 7 cards to each player from the deck</td>
+<td>Deal 7 cards per player and start discard pile</td>
 </tr>
 <tr class="odd">
-<td><code><a href="reference/setup_game.html">setup_game()</a></code></td>
-<td>Initialize game state including turn, discard, direction</td>
-</tr>
-<tr class="even">
 <td><code><a href="reference/play_turns_loop.html">play_turns_loop()</a></code></td>
-<td>Simulate turn-by-turn gameplay logic</td>
-</tr>
-<tr class="odd">
-<td><code><a href="reference/play_game.html">play_game()</a></code></td>
-<td>Simulate a full game end-to-end from dealing to winner</td>
+<td>Internal engine that handles each player’s turn</td>
 </tr>
 <tr class="even">
-<td><code><a href="reference/score_game.html">score_game()</a></code></td>
-<td>Rank players by the number of cards remaining</td>
+<td><code><a href="reference/play_game.html">play_game()</a></code></td>
+<td>Runs a full game from start to winner or draw</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section level2">
-<h2 id="example-simulate-a-game">Example: Simulate a Game<a class="anchor" aria-label="anchor" href="#example-simulate-a-game"></a>
-</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">uno</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Create the full UNO deck</span></span>
-<span><span class="va">deck</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_uno_deck.html">create_uno_deck</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Deal to 4 players</span></span>
-<span><span class="va">deal</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/deal_hands.html">deal_hands</a></span><span class="op">(</span><span class="va">deck</span>, n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Simulate a full UNO game</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/play_game.html">play_game</a></span><span class="op">(</span>n_players <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># View winner</span></span>
-<span><span class="va">result</span><span class="op">$</span><span class="va">winner</span></span>
-<span></span>
-<span><span class="co"># Score all players</span></span>
-<span><span class="fu"><a href="reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Visualise card count</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot</a></span><span class="op">(</span><span class="fu"><a href="reference/score_game.html">score_game</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>,</span>
-<span>        main <span class="op">=</span> <span class="st">"Cards Remaining per Player"</span>,</span>
-<span>        col <span class="op">=</span> <span class="st">"darkorange"</span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p><em>Note: <code><a href="reference/play_turns_loop.html">play_turns_loop()</a></code> is called internally by <code><a href="reference/play_game.html">play_game()</a></code> and not used directly.</em></p>
+</blockquote>
+<hr>
 </div>
 <div class="section level2">
 <h2 id="testing">Testing<a class="anchor" aria-label="anchor" href="#testing"></a>
 </h2>
-<p>This package includes a full test suite using testthat. To run all tests, use:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>The package includes a suite of unit tests using the <code>testthat</code> framework. To run the tests:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">test</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Tests include</strong>: - Return structure validity</p>
+<p>Tests cover:</p>
 <ul>
-<li><p>Deck size after shuffling (108 cards)</p></li>
-<li><p>Hands contain 7 cards each</p></li>
-<li><p>Action card effects (+2, Skip, Reverse, Wild Draw 4)</p></li>
-<li><p>Scoring logic (winner has 0, others ranked by remaining cards)</p></li>
-<li><p>Deck exhaustion edge case handling</p></li>
-<li><p>Compatibility for multiple player sizes (2 to 4)</p></li>
+<li>Deck size and card type correctness<br>
+</li>
+<li>Proper card dealing and hand sizes<br>
+</li>
+<li>Internal consistency of discard pile<br>
+</li>
+<li>Wild card behavior and color assignment<br>
+</li>
+<li>Game loop and winner detection logic</li>
 </ul>
+<hr>
 </div>
 <div class="section level2">
 <h2 id="learn-more">Learn More<a class="anchor" aria-label="anchor" href="#learn-more"></a>
 </h2>
-<p>For full documentation, usage guides, and vignettes, visit the <a href="https://monasharp.github.io/game-package-kookaburras/" class="external-link"><strong>UNO Package Website</strong></a>.</p>
+<p>Explore the full vignette and documentation on the <a href="https://monasharp.github.io/game-package-kookaburras/" class="external-link">UNO Package Website</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
@@ -216,7 +203,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
