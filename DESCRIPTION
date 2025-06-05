@@ -15,7 +15,11 @@ Imports:
   purrr,
   tibble,
   tidyr,
-  tidyverse
+  tidyverse,
+  vctrs,
+  Rcpp
+LinkingTo:
+   Rcpp
 Suggests:
   testthat,
   knitr,
