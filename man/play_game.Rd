@@ -2,16 +2,39 @@
 % Please edit documentation in R/play.R
 \name{play_game}
 \alias{play_game}
-\title{Game logic}
+\title{Start a New UNO Game}
 \usage{
 play_game(n_players = 4)
 }
-\description{
-The gmae logic is divided into teo main functions
+\arguments{
+\item{n_players}{Number of players in the game (must be ≥ 2). Default is 4.}
 }
-\details{
-`play_game()`-  Initializes the game by creating a deck, dealing hands to players, and starting the game loop.
- `play_turns_loop()` - Handles the main game loop, processing each player's turn until a winner is found.
- This included drawing cards, playing cards, and handling special actions like skips and reverses. Logic for
-  wild cards and drawing cards is also included.
+\value{
+A list containing:
+\describe{
+  \item{winner}{Name of the winning player (e.g., "Player_3"), or NULL if no player wins before the deck is exhausted}
+  \item{hands}{Final hand of each player at the end of the game, as a named list of tibbles}
+  \item{discard}{Final discard pile showing the full play history as a tibble with columns \code{color}, \code{value}, and \code{type}.
+  \strong{Note:} Wild cards (including \code{wild} and \code{wild_draw4}) will appear with the chosen color (e.g., \code{color = "green"} and \code{value = "wild"}), indicating the color selected by the player when the card was played.}
+}
+}
+\description{
+This function sets up and plays a full game of UNO using standard rules.
+It creates the deck, deals cards to each player, and runs the game loop
+using `play_turns_loop()`. The game continues until one player wins or
+the deck runs out of cards.
+}
+\examples{
+# Run a game with 4 players
+result <- play_game(4)
+
+# See the winner
+result$winner
+
+# Preview the discard pile
+head(result$discard)
+
+# Check final hand of Player 2
+result$hands$Player_2
+
 }

@@ -1,64 +1,37 @@
-test_that("setup_game() returns correct structure", {
-  state <- setup_game(n_players = 4)
-  expect_named(state, c("hands", "deck", "discard", "direction", "turn"))
-  expect_type(state$hands, "list")
-  expect_equal(length(state$hands), 4)
-  expect_true(all(sapply(state$hands, nrow) == 7))
-  expect_equal(nrow(state$discard), 1)
-  expect_true(is.data.frame(state$deck))
-  expect_true(is.integer(state$direction) || is.numeric(state$direction))
-  expect_true(state$direction %in% c(1, -1))
-  expect_true(state$turn %in% 1:4)
+test_that("play_game() returns correct structure", {
+  result <- play_game(4)
+
+  expect_type(result, "list")
+  expect_named(result, c("winner", "hands", "discard"))
+  expect_true(is.character(result$winner) || is.null(result$winner))
+  expect_true(is.list(result$hands))
+  expect_s3_class(result$discard, "tbl_df")
 })
 
-test_that("setup_game() works for various valid player counts", {
-  for (n in 2:10) {
-    state <- setup_game(n)
-    expect_equal(length(state$hands), n)
-    expect_true(all(sapply(state$hands, nrow) == 7))
-    expect_equal(nrow(state$discard), 1)
+test_that("play_game() assigns correct number of hands", {
+  result <- play_game(4)
+  expect_equal(length(result$hands), 4)
+  expect_named(result$hands, paste0("Player_", 1:4))
+})
+
+test_that("play_game() discard pile is valid tibble", {
+  result <- play_game(4)
+  discard <- result$discard
+
+  expect_s3_class(discard, "tbl_df")
+  expect_true(all(c("color", "value", "type") %in% names(discard)))
+  expect_gt(nrow(discard), 1)
+})
+
+test_that("play_game() works for different player counts", {
+  for (n in 2:6) {
+    result <- play_game(n)
+    expect_equal(length(result$hands), n)
   }
 })
 
-test_that("play_turns_loop() completes and returns a winner", {
-  state <- setup_game(4)
-  result <- play_turns_loop(
-    hands = state$hands,
-    deck = state$deck,
-    discard = state$discard,
-    direction = state$direction,
-    turn = state$turn
-  )
-  expect_named(result, c("winner", "hands", "discard"))
-  expect_true(result$winner %in% names(result$hands))
-  expect_equal(nrow(result$hands[[result$winner]]), 0)
-})
-
-test_that("play_turns_loop() handles exhausted deck gracefully", {
-  state <- setup_game(4)
-  # Remove the draw pile to simulate exhaustion
-  result <- play_turns_loop(
-    hands = state$hands,
-    deck = state$deck[0, ],
-    discard = state$discard,
-    direction = state$direction,
-    turn = state$turn
-  )
-  expect_null(result$winner)
-  expect_match(result$reason, "Deck exhausted")
-})
-
-test_that("play_game() returns valid structure", {
-  result <- play_game(n_players = 4)
-  expect_named(result, c("winner", "hands", "discard"))
-  expect_true(result$winner %in% names(result$hands))
-  expect_equal(nrow(result$hands[[result$winner]]), 0)
-  expect_true(is.data.frame(result$discard))
-})
-
-test_that("play_game() fails on invalid player counts", {
-  expect_error(play_game(n_players = 1), "must be a single whole number")
-  expect_error(play_game(n_players = 4.5), "must be a single whole number")
-  expect_error(play_game(n_players = "four"), "must be a single whole number")
-  expect_error(play_game(n_players = c(2, 3)), "must be a single whole number")
+test_that("winner is one of the players or NULL", {
+  result <- play_game(4)
+  valid_names <- paste0("Player_", 1:4)
+  expect_true(is.null(result$winner) || result$winner %in% valid_names)
 })

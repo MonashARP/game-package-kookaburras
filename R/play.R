@@ -1,15 +1,34 @@
-#' Game logic
+#' Start a New UNO Game
 #'
-#' The gmae logic is divided into teo main functions
+#' This function sets up and plays a full game of UNO using standard rules.
+#' It creates the deck, deals cards to each player, and runs the game loop
+#' using `play_turns_loop()`. The game continues until one player wins or
+#' the deck runs out of cards.
 #'
-#' `play_game()`-  Initializes the game by creating a deck, dealing hands to players, and starting the game loop.
-#'  `play_turns_loop()` - Handles the main game loop, processing each player's turn until a winner is found.
-#'  This included drawing cards, playing cards, and handling special actions like skips and reverses. Logic for
-#'   wild cards and drawing cards is also included.
+#' @param n_players Number of players in the game (must be ≥ 2). Default is 4.
 #'
+#' @return A list containing:
+#' \describe{
+#'   \item{winner}{Name of the winning player (e.g., "Player_3"), or NULL if no player wins before the deck is exhausted}
+#'   \item{hands}{Final hand of each player at the end of the game, as a named list of tibbles}
+#'   \item{discard}{Final discard pile showing the full play history as a tibble with columns \code{color}, \code{value}, and \code{type}.
+#'   \strong{Note:} Wild cards (including \code{wild} and \code{wild_draw4}) will appear with the chosen color (e.g., \code{color = "green"} and \code{value = "wild"}), indicating the color selected by the player when the card was played.}
+#' }
 #'
-
-# Defining play_game and setting default no of players as 4.
+#' @examples
+#' # Run a game with 4 players
+#' result <- play_game(4)
+#'
+#' # See the winner
+#' result$winner
+#'
+#' # Preview the discard pile
+#' head(result$discard)
+#'
+#' # Check final hand of Player 2
+#' result$hands$Player_2
+#'
+#' @export
 play_game <- function(n_players = 4) {
 
   # Calling the create_uno_deck and deal_hands functions to create a deck and deal hands to players.
@@ -37,7 +56,33 @@ play_game <- function(n_players = 4) {
   return(result)
 }
 
-
+#' Game Loop Logic for UNO
+#'
+#' Handles the main logic of the UNO game by processing each player's turn.
+#' This includes checking playable cards, handling drawing from the deck,
+#' applying special actions (skip, reverse, +2, wild), and checking for a winner.
+#'
+#' This function is not typically called directly by the user. Instead, use
+#' \code{\link{play_game}} to run a full game.
+#'
+#' @param hands A named list of tibbles representing each player's hand.
+#' @param deck A tibble of remaining cards to draw from.
+#' @param discard A tibble representing the current discard pile.
+#' @param direction An integer (1 or -1) to indicate the direction of play.
+#' @param turn The starting player number (typically 1).
+#'
+#' @return A list containing:
+#' \describe{
+#'   \item{winner}{Name of the winning player (e.g. "Player_3") or NULL if the game ends in a draw}
+#'   \item{hands}{A named list of each player's final hand}
+#'   \item{discard}{A tibble showing the final discard pile, including the full play history.
+#'   \strong{Note:} For wild and wild_draw4 cards, the \code{color} column reflects the color the player chose when playing the card (e.g. \code{"green wild"} means the player played a wild card and chose green).}
+#' }
+#'
+#' @keywords internal
+play_turns_loop <- function(hands, deck, discard, direction, turn) {
+  ...
+}
 # Defining the play_turns_loop function to handle game logic
 play_turns_loop <- function(hands, deck, discard, direction, turn) {
 

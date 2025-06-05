@@ -1,8 +1,44 @@
-#' Creating a UNO deck
+#' Create a Standard UNO Deck
 #'
-#' Builds a standard 108-card UNO deck with numbers, actions, and wild cards.
+#' Builds the complete 108-card UNO deck used in a standard game.
+#' Each of the four colors — red, green, blue, and yellow — includes:
+#' \itemize{
+#'   \item One \strong{0} card
+#'   \item Two copies each of cards numbered \strong{1} through \strong{9}
+#'   \item Two copies each of the action cards: \strong{skip}, \strong{reverse}, and \strong{+2}
+#' }
+#' Additionally, the deck includes eight uncolored wild cards:
+#' \itemize{
+#'   \item Four \strong{wild} cards
+#'   \item Four \strong{wild_draw4} cards
+#' }
 #'
-#' @return A tibble with columns: color, value, type.
+#' This function is typically used as the first step in game setup, and
+#' returns a tidy tibble containing all card data.
+#'
+#' @return A tibble with 108 rows and 3 columns:
+#' \describe{
+#'   \item{color}{Card color — one of \code{"red"}, \code{"green"}, \code{"blue"}, \code{"yellow"}, or \code{"wild"}}
+#'   \item{value}{Card face value — numbers \code{"0"} to \code{"9"}, or action names}
+#'   \item{type}{Card type — either \code{"number"}, \code{"action"}, or \code{"wild"}}
+#' }
+#'
+#' @examples
+#' # Generate and inspect the deck
+#' deck <- create_uno_deck()
+#' dim(deck)         # Should return 108 rows, 3 columns
+#' table(deck$type)  # Count of card types
+#' head(deck)        # Preview the top of the deck
+#'
+#' # Filter for wild cards
+#' deck[deck$type == "wild", ]
+#'
+#' # Count how many of each card value exist
+#' table(deck$value)
+#'
+#' # Filter just the blue action cards
+#' subset(deck, color == "blue" & type == "action")
+#'
 #' @export
 create_uno_deck <- function() {
   colors <- c("red", "green", "blue", "yellow")

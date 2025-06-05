@@ -20,21 +20,17 @@ library(dplyr)
 
 ## Introduction
 
-The uno package simulates a full multiplayer UNO game using realistic rules and automatic CPU-driven turns.
+The uno package lets you simulate a full multiplayer UNO game using realistic rules.
 
-It includes:
+It supports:
 
--   Shuffling and dealing a full UNO deck
+-   Full UNO deck generation
 
--   Turn-based logic with direction reversal
+-   Dealing hands to players
 
--   Support for action cards (Skip, Reverse, +2, Wild, Wild Draw 4)
+-   Turn-by-turn play using action and wild cards
 
--   Automatic winner detection
-
--   Final scoring with summary output
-
--   Ideal for teaching game simulations, functional programming, or AI experimentation.
+-   Winner detection and scoring
 
 ## Installation
 
@@ -71,7 +67,23 @@ deal$hands$Player_1
 deal$discard
 ```
 
-Each player is dealt 7 cards. The function returns the hands, updated deck, and one card placed into the discard pile.
+Each player is dealt 7 cards. The function returns:
+
+- A named list of player hands
+
+- The updated deck
+
+- A starting discard pile with one card
+
+## How Gameplay Works
+
+The game logic is handled through two main functions:
+
+-**play_game()** – Runs the full game from start to finish
+
+-**play_turns_loop()** – Internal engine that manages turns, checks for playable cards, handles actions, and tracks the winner
+
+The game proceeds automatically until one player finishes all cards. If the draw pile runs out before that, the game ends in a draw.
 
 ## Simulate a Full Game
 
@@ -87,24 +99,7 @@ tail(result$discard)
 
 The game runs automatically until one player wins by emptying their hand. All actions (skip, draw, reverse) are handled by the engine.
 
-## Score the Game
-
-```{r}
-score_game(result)
-```
-
-Ranks players based on cards remaining. Winner has 0, others are sorted.
-
-### Visual Summary
-
-```{r}
-scores <- score_game(result)
-barplot(scores$Cards_Remaining,
-        names.arg = scores$Player,
-        col = "steelblue",
-        main = "Final Card Counts per Player")
-
-```
+**Note:** Wild cards (wild, wild_draw4) appear in the discard pile with the color selected by the player who played them. For example, a card with value = "wild" and color = "green" means the player played a wild and chose green.
 
 ### Access Individual Results
 
@@ -122,14 +117,12 @@ result$discard
 
 ## Available Functions
 
-| Function            | Description                                 |
-| ------------------- | ------------------------------------------- |
-| `create_uno_deck()` | Generate a 108-card UNO deck                |
-| `deal_hands()`      | Deal 7 cards to each player                 |
-| `setup_game()`      | Initialize hands, deck, discard, turn state |
-| `play_turns_loop()` | Turn-by-turn gameplay engine                |
-| `play_game()`       | Full simulation: setup + play to winner     |
-| `score_game()`      | Rank players based on final hand sizes      |
+| Function            | Description                                    |
+| ------------------- | ---------------------------------------------- |
+| `create_uno_deck()` | Generate a 108-card UNO deck                   |
+| `deal_hands()`      | Deal 7 cards to each player                    |
+| `play_game()`       | Full simulation: setup + play to winner        |
+| `play_turns_loop()` | Internal game loop handling each player's turn |
 
 ##  What's Next
 

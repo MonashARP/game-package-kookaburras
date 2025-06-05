@@ -1,119 +1,97 @@
-# uno
 
-`uno` is an R package that simulates a full multiplayer UNO game, including CPU-generated turns, realistic card rules, and winner detection. Built for reproducibility, testing, and fun, it's ideal for both classroom simulations and package development learning.
+# `uno`: Multiplayer UNO Game in R
 
-Developed by Team Kookaburras as part of the Monash ETC Advanced R course.
+The `uno` R package simulates a full multiplayer UNO game using realistic card rules and automated gameplay.
 
-------------------------------------------------------------------------
+Designed as part of the **Monash ETC Advanced R course**, this package allows players to experience turn-by-turn logic, action card effects, and winner detection, all within a reproducible and testable R environment.
+
+> Developed by Team Kookaburras.
+
+---
 
 ## Installation
 
-Install the development version from GitHub:
+Install the development version directly from GitHub:
 
-``` r
+```r
 # Install devtools if not already installed
 install.packages("devtools")
 
-# Install the uno package
+# Install uno package from GitHub
 devtools::install_github("MonashARP/game-package-kookaburras", subdir = "uno")
 ```
 
+---
+
 ## Features
 
--   Shuffles and builds the full 108-card UNO deck
+- Generates a full UNO deck (108 cards)
+- Deals cards fairly to all players
+- Handles all action and wild cards
+- Simulates turn-by-turn game logic
+- Detects winner or deck exhaustion
+- Includes internal game loop control
+- Documented and unit-tested
 
--   Deals hands fairly across players
-
--   Fully handles action cards: Skip, Reverse, +2, Wild, and Wild Draw 4
-
--   Simulates turn-by-turn gameplay
-
--   Detects the winner and provides end-game scoring
-
--   Extensively documented and tested
+---
 
 ## Quick Start
 
-``` r
+```r
 library(uno)
 
-# Create and deal
+# Create and shuffle the full deck
 deck <- create_uno_deck()
+
+# Deal hands to players
 deal <- deal_hands(deck, n_players = 4)
 
-# Simulate a full game
+# Simulate a complete game
 result <- play_game(n_players = 4)
 
 # View the winner
 result$winner
 
-# Score the game
-score_game(result)
+# Inspect final hands
+result$hands$Player_2
+
+# Check discard pile history
+tail(result$discard)
 ```
+
+---
 
 ## Main Functions
 
-| Function | Description |
-|--------------------|----------------------------------------------------|
-| `create_uno_deck()` | Generate and shuffle the 108-card UNO deck |
-| `deal_hands()` | Deal 7 cards to each player from the deck |
-| `setup_game()` | Initialize game state including turn, discard, direction |
-| `play_turns_loop()` | Simulate turn-by-turn gameplay logic |
-| `play_game()` | Simulate a full game end-to-end from dealing to winner |
-| `score_game()` | Rank players by the number of cards remaining |
+| Function            | Description                                    |
+|---------------------|------------------------------------------------|
+| `create_uno_deck()` | Generate the 108-card UNO deck                 |
+| `deal_hands()`      | Deal 7 cards per player and start discard pile |
+| `play_turns_loop()` | Internal engine that handles each player’s turn |
+| `play_game()`       | Runs a full game from start to winner or draw  |
 
-## Example: Simulate a Game
+> *Note: `play_turns_loop()` is called internally by `play_game()` and not used directly.*
 
-``` r
-library(uno)
-
-# Create the full UNO deck
-deck <- create_uno_deck()
-
-# Deal to 4 players
-deal <- deal_hands(deck, n_players = 4)
-
-# Simulate a full UNO game
-result <- play_game(n_players = 4)
-
-# View winner
-result$winner
-
-# Score all players
-score_game(result)
-
-# Visualise card count
-barplot(score_game(result),
-        main = "Cards Remaining per Player",
-        col = "darkorange")
-```
+---
 
 ## Testing
 
-This package includes a full test suite using testthat. To run all tests, use:
+The package includes a suite of unit tests using the `testthat` framework. To run the tests:
 
-``` r
+```r
 devtools::test()
 ```
 
-**Tests include**:
- - Return structure validity
+Tests cover:
 
- - Deck size after shuffling (108 cards)
+- Deck size and card type correctness  
+- Proper card dealing and hand sizes  
+- Internal consistency of discard pile  
+- Wild card behavior and color assignment  
+- Game loop and winner detection logic
 
- - Hands contain 7 cards each
+---
 
- - Action card effects (+2, Skip, Reverse, Wild Draw 4)
-
- - Scoring logic (winner has 0, others ranked by remaining cards)
-
- - Deck exhaustion edge case handling
-
- - Compatibility for multiple player sizes (2 to 4)
- 
 ## Learn More
 
-For full documentation, usage guides, and vignettes, visit the [**UNO Package Website**](https://monasharp.github.io/game-package-kookaburras/).
-
-
-
+Explore the full vignette and documentation on the [UNO Package Website](https://monasharp.github.io/game-package-kookaburras/).

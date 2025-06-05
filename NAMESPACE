@@ -2,3 +2,4 @@
 
 export(create_uno_deck)
 export(deal_hands)
+export(play_game)

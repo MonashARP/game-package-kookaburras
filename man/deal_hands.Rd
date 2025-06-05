@@ -2,21 +2,48 @@
 % Please edit documentation in R/deal_hands.R
 \name{deal_hands}
 \alias{deal_hands}
-\title{Deal 7 cards to each player after shuffling the deck}
+\title{Deal Cards to UNO Players}
 \usage{
 deal_hands(deck, n_players = 4)
 }
 \arguments{
-\item{deck}{A tibble with UNO cards created using create_deck()}
+\item{deck}{A tibble of UNO cards, typically created using \code{create_uno_deck()}.}
 
-\item{n_players}{Number of players}
+\item{n_players}{Number of players (must be 2 or more). Defaults to 4.}
 }
 \value{
-A list with:
-hands - list of individual player card set,
-deck - remaining cards forming the draw pile and
-discard - the starting card for the game to begin
+A list with three components:
+\describe{
+  \item{hands}{A named list of tibbles, each with 7 cards for one player}
+  \item{deck}{A tibble of remaining cards (the draw pile)}
+  \item{discard}{A one-row tibble representing the initial discard card}
+}
 }
 \description{
-Deal 7 cards to each player after shuffling the deck
+Shuffles the full UNO deck and deals 7 cards to each player. After dealing,
+the next card from the deck is used to start the discard pile, and the
+remaining cards form the draw pile. Player hands are returned as a named
+list, and the function ensures there are enough cards to support the number
+of players.
+}
+\details{
+This function is typically called during game setup, after generating the deck
+using \code{\link{create_uno_deck}}.
+}
+\examples{
+deck <- create_uno_deck()
+result <- deal_hands(deck, n_players = 4)
+
+# View Player 1's hand
+result$hands$Player_1
+
+# Check the discard card
+result$discard_one
+
+# Number of cards left in the draw pile
+nrow(result$deck)
+
+# Validate hand sizes
+sapply(result$hands, nrow)
+
 }
