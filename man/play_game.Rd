@@ -2,36 +2,16 @@
 % Please edit documentation in R/play.R
 \name{play_game}
 \alias{play_game}
-\title{Simulate a Complete UNO Game}
+\title{Game logic}
 \usage{
 play_game(n_players = 4)
 }
-\arguments{
-\item{n_players}{Integer. Number of players to simulate. Default is 4.}
-}
-\value{
-A named list with:
-\itemize{
-  \item \strong{winner} – Name of the winning player
-  \item \strong{hands} – Final hand of each player
-  \item \strong{discard} – Final discard pile
-}
-}
 \description{
-Combines setup and gameplay to simulate a full UNO match from start to finish.
-This is the easiest entry point for users to run a game in one line.
+The gmae logic is divided into teo main functions
 }
 \details{
-This function performs two stages:
-\itemize{
-  \item \strong{Game setup} using \code{\link{setup_game}}
-  \item \strong{Turn simulation} using \code{\link{play_turns_loop}}
-}
-}
-\examples{
-result <- play_game(n_players = 4)
-result$winner
-sapply(result$hands, nrow)
-tail(result$discard)
-
+`play_game()`-  Initializes the game by creating a deck, dealing hands to players, and starting the game loop.
+ `play_turns_loop()` - Handles the main game loop, processing each player's turn until a winner is found.
+ This included drawing cards, playing cards, and handling special actions like skips and reverses. Logic for
+  wild cards and drawing cards is also included.
 }
