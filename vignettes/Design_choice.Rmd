@@ -1,8 +1,8 @@
 ---
-title: "Design Decisions: uno"
-output: rmarkdown::html_document
+title: "Design Choices"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Design Decisions: uno}
+  %\VignetteIndexEntry{Design Choices}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
