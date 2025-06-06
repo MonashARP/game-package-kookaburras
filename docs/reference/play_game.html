@@ -23,6 +23,10 @@ the deck runs out of cards."></head><body>
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/uno.html">Get started</a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Design_choice.html">Design Decisions: uno</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
@@ -84,23 +88,14 @@ the deck runs out of cards.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Preview the discard pile</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">discard</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   color  value      type  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> yellow 4          number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> yellow 8          number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> green  8          number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> green  wild_draw4 wild  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> green  2          number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> green  9          number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;card_vctr[6]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;yellow_4&gt;         &lt;yellow_8&gt;         &lt;green_8&gt;          &lt;green_wild_draw4&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] &lt;green_2&gt;          &lt;green_9&gt;         </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Check final hand of Player 2</span></span></span>
 <span class="r-in"><span><span class="va">result</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_2</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   color value type  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> green 9     number</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> wild  wild  wild  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;card_vctr[2]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;green_9&gt;   &lt;wild_wild&gt;</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

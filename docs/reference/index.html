@@ -17,6 +17,10 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/uno.html">Get started</a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Design_choice.html">Design Decisions: uno</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
@@ -43,6 +47,24 @@
 
       <dl><dt>
 
+          <code><a href="card_suit.html">card_suit()</a></code>
+
+        </dt>
+        <dd>Generic to get card suit (e.g., "red", "blue", "wild")</dd>
+      </dl><dl><dt>
+
+          <code><a href="card_value.html">card_value()</a></code>
+
+        </dt>
+        <dd>Generic to get card value (e.g., "3", "skip", "draw4")</dd>
+      </dl><dl><dt>
+
+          <code><a href="convert_to_card_vctr.html">convert_to_card_vctr()</a></code>
+
+        </dt>
+        <dd>Convert a tibble to a card_vctr</dd>
+      </dl><dl><dt>
+
           <code><a href="create_uno_deck.html">create_uno_deck()</a></code>
 
         </dt>
@@ -53,6 +75,12 @@
 
         </dt>
         <dd>Deal Cards to UNO Players</dd>
+      </dl><dl><dt>
+
+          <code><a href="new_card_vctr.html">new_card_vctr()</a></code>
+
+        </dt>
+        <dd>Create a card vector (custom vctrs class)</dd>
       </dl><dl><dt>
 
           <code><a href="play_game.html">play_game()</a></code>

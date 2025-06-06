@@ -1,0 +1,55 @@
+---
+title: "Design Decisions: uno"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Design Decisions: uno}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Overview
+
+
+
+# Function Name Design
+
+
+
+# Argument Design
+
+
+
+# User Workflow
+
+
+
+# Internal Modular Functions
+
+
+
+# Use of vctrs
+
+
+
+# Limitations
+
+
+
+# Alternative Designs Considered
+
+
+
+# Use of LLM (ChatGPT) Support
+
+
+
+# Summary
+
+
