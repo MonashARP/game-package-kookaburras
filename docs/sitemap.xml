@@ -1,20 +1,20 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/articles/Design_choice.html</loc></url>
-<url><loc>/articles/index.html</loc></url>
-<url><loc>/articles/uno.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/reference/card_suit.html</loc></url>
-<url><loc>/reference/card_value.html</loc></url>
-<url><loc>/reference/convert_to_card_vctr.html</loc></url>
-<url><loc>/reference/create_uno_deck.html</loc></url>
-<url><loc>/reference/deal_hands.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
-<url><loc>/reference/new_card_vctr.html</loc></url>
-<url><loc>/reference/play_game.html</loc></url>
-<url><loc>/reference/play_turns_loop.html</loc></url>
-<url><loc>/reference/score_game.html</loc></url>
-<url><loc>/reference/setup_game.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/404.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/articles/Design_choice.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/articles/index.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/articles/uno.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/authors.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/index.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/card_suit.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/card_value.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/convert_to_card_vctr.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/create_uno_deck.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/deal_hands.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/index.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/new_card_vctr.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/play_game.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/play_turns_loop.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/score_game.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/setup_game.html</loc></url>
 </urlset>
 

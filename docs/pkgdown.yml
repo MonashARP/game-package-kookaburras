@@ -4,4 +4,7 @@ pkgdown_sha: ~
 articles:
   Design_choice: Design_choice.html
   uno: uno.html
-last_built: 2025-06-06T03:36Z
+last_built: 2025-06-06T03:43Z
+urls:
+  reference: https://monasharp.github.io/game-package-kookaburras/reference
+  article: https://monasharp.github.io/game-package-kookaburras/articles
