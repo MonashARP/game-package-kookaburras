@@ -17,7 +17,8 @@ Imports:
   tidyr,
   tidyverse,
   vctrs,
-  Rcpp
+  Rcpp,
+  crayon
 LinkingTo:
    Rcpp
 Suggests:

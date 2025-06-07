@@ -3,6 +3,7 @@
 S3method(card_suit,card_vctr)
 S3method(card_value,card_vctr)
 S3method(format,card_vctr)
+S3method(print,card_vctr)
 S3method(vec_cast,card_vctr.card_vctr)
 S3method(vec_ptype2,card_vctr.card_vctr)
 export(card_suit)

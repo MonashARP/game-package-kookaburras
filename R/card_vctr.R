@@ -1,9 +1,9 @@
 #' @importFrom vctrs new_vctr vec_data vec_cast vec_ptype2
 NULL
+
 #' Create a card vector (custom vctrs class)
 #'
 #' @param x Character vector like "red_3", "blue_skip", etc.
-#'
 #' @return A custom `card_vctr` object
 #' @export
 #'
@@ -15,8 +15,46 @@ new_card_vctr <- function(x = character()) {
 
 #' @export
 format.card_vctr <- function(x, ...) {
-  paste0("<", vctrs::vec_data(x), ">")
+  suit <- card_suit(x)
+  val <- card_value(x)
+  type <- ifelse(val %in% as.character(0:9), "number",
+                 ifelse(val %in% c("skip", "reverse", "+2"), "action",
+                        ifelse(val %in% c("wild", "draw4", "wild_draw4"), "wild", "unknown")))
+  sprintf("%-8s | %-10s | %s", suit, val, type)
 }
+
+#' @export
+#' @export
+print.card_vctr <- function(x, ...) {
+  suit <- card_suit(x)
+  val <- card_value(x)
+
+  type <- ifelse(val %in% as.character(0:9), "number",
+                 ifelse(val %in% c("skip", "reverse", "+2"), "action",
+                        ifelse(val %in% c("wild", "draw4", "wild_draw4"), "wild", "unknown")))
+
+  color_display <- purrr::map_chr(suit, function(col) {
+    switch(col,
+           red    = crayon::red(col),
+           blue   = crayon::blue(col),
+           green  = crayon::green(col),
+           yellow = crayon::yellow(col),
+           wild   = crayon::silver("wild"),
+           col)
+  })
+
+  cat("<card_vctr> (length = ", length(x), ")\n", sep = "")
+  cat("color     | value      | type\n")
+  cat("----------|------------|----------\n")
+  for (i in seq_along(x)) {
+    cat(sprintf("%-10s| %-10s| %s\n",
+                color_display[i],
+                val[i],
+                type[i]))
+  }
+  invisible(x)
+}
+
 
 #' @export
 vec_ptype2.card_vctr.card_vctr <- function(x, y, ...) new_card_vctr()
@@ -51,6 +89,7 @@ card_value <- function(x) {
 card_value.card_vctr <- function(x) {
   sub(".*_", "", vctrs::vec_data(x))
 }
+
 #' Convert a tibble to a card_vctr
 #'
 #' @param tbl A tibble with columns `color` and `value`
