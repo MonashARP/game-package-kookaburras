@@ -70,12 +70,58 @@ This design makes the UNO package flexible for both casual users — who can sim
 
 # Internal Modular Functions
 
+We structured our package around small, reusable functions to keep logic clean and maintainable:
+
+-   `play_turns_loop()` separates gameplay logic from setup, which allows future extensions like multi-round tracking or rule changes without modifying core setup code.
+
+-   `card_suit()` and `summarise_hand()` allow game logic or user analysis to reference card color counts easily.
+
+This modular design means we can test and update individual parts of the codebase without risking breakage elsewhere. It also makes unit testing straightforward.
+
 # Use of vctrs
 
+We used the vctrs package to create a custom vector class card_vctr. This improves type safety and allows us to define card-specific helper functions like:
+
+-   `card_suit()` — extracts the color (e.g., red, blue, green, yellow, or wild)
+
+-   Future extensions (e.g., `card_value()`, `is_action_card()`) can be added using the same base structure.
+
+The `card_vctr` class ensures that cards are treated as a consistent, domain-specific object type rather than arbitrary strings. This improves error handling, readability, and developer experience.
+
 # Limitations
+
+This version of the package is fully functional but focused on core gameplay. Known limitations include:
+
+-   No support for stacking draw cards or challenging +4s
+
+-   No scoring system across multiple rounds (e.g., traditional 500-point rules)
+
+-   No skip logic for disconnected users or AI players
+
+-   No GUI or Shiny app (yet)
+
+-   No multiplayer input (pure simulation only)
+
+-   No re-entry logic when draw pile is exhausted
+
+These features were intentionally deferred to keep the package simple, focused, and testable.
 
 # Alternative Designs Considered
 
 # Use of LLM (ChatGPT) Support
+
+# Note on C++ Compilation Errors
+
+If you are developing the package and using C++ code (e.g., via src/card_utils.cpp), you may occasionally face issues with devtools::load_all() failing due to stale or corrupted compiled files.
+
+If you encounter an error like:
+
+`ld: unknown file type in 'card_utils.o'`
+
+Run this before load_all() to fix it:
+
+`devtools::clean_dll() devtools::load_all()`
+
+This cleans the compiled shared object files and ensures the package compiles correctly with fresh C++ builds. We recommend always using this sequence when updating any .cpp file during development.
 
 # Summary
