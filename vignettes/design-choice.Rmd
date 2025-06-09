@@ -108,6 +108,18 @@ These features were intentionally deferred to keep the package simple, focused, 
 
 # Alternative Designs Considered
 
+We explored a few other options during development:
+
+- **Using S4 or R6:** We opted for S3 with vctrs::new_vctr() instead to maintain simplicity and compatibility with tidyverse workflows.
+
+- **Deck as an environment:** We briefly explored mutable decks (environments or reference classes) but chose immutable tibble structures to make debugging and reproducibility easier.
+
+- **Random turn skipping:** Some early versions had randomized skipping logic, which we removed for predictability and fairness.
+
+- **Exporting all helpers:** We kept some internal logic unexported to avoid cluttering the user namespace.
+
+Each design decision balanced functionality with clarity, especially for beginners or students using this as a learning package.
+
 # Use of LLM (ChatGPT) Support
 
 # Note on C++ Compilation Errors
