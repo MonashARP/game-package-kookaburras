@@ -24,7 +24,7 @@ Use this constructor when you want to define or manipulate UNO cards directly,
 especially for testing, simulations, or building player hands manually.
 }
 \examples{
-new_card_vctr(c("red_3", "blue_skip", "wild_draw4"))
+cards <- new_card_vctr(c("red_3", "blue_skip", "wild_draw4"))
 
 # Extract suits from these cards
 card_suit(cards)

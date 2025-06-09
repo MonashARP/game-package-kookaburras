@@ -1,6 +1,6 @@
 test_that("summarise_hand() works for valid player", {
-  result <- play_game(3)
-  hands <- result$hands
+  cards <- new_card_vctr(c("red_3", "blue_skip", "green_2", "yellow_reverse"))
+  hands <- list(Player_1 = cards)
 
   summary <- summarise_hand(hands, "Player_1")
 

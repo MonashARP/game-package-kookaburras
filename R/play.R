@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' # Run a game with 4 players
-#' play_game(4)
+#' result <- play_game(4)
 #'
 #' # See the winner
 #' result$winner

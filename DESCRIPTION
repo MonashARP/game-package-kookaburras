@@ -7,7 +7,7 @@ Authors@R: c(person("Richi", "Susil", email = "Rsus0004@student.monash.edu", rol
   person("Dhanshree", "Dhrafani", email = "ddhr0001@student.monash.edu", role = c("aut")))
 Description: This package allows users to simulate a multiplayer UNO game,
   including deck creation, card dealing, turn simulation, and scoring.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Imports:

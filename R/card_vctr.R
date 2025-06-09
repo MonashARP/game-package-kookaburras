@@ -19,7 +19,7 @@ NULL
 #' with UNO-specific behavior when passed to helper functions such as `card_suit()` and `card_value()`.
 #'
 #' @examples
-#' new_card_vctr(c("red_3", "blue_skip", "wild_draw4"))
+#' cards <- new_card_vctr(c("red_3", "blue_skip", "wild_draw4"))
 #'
 #' # Extract suits from these cards
 #' card_suit(cards)
