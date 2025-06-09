@@ -88,10 +88,10 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
 
   # Calculating number of players based on the length of hands list
   n_players <- length(hands)
-  deck_index <- 1                  # Setting deck_index to 1 to loop through the remaining deck
-  deck_size <- nrow(deck)         # Cards remaining in deck after dealing hands to players
+  deck_index <- 1
+  deck_size <- nrow(deck)
 
-
+  # Initializing variables for the game state
   winner <- NULL
   game_running <- TRUE
 
@@ -99,20 +99,21 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
   while (game_running) {
 
     # Getting the current player
-    player_name <- paste0("Player_", turn)      # Player's current cards in hand
+    player_name <- paste0("Player_", turn)
     hand <- hands[[player_name]]
-    top_card <- discard[nrow(discard), ]       # Top card on the discard plie
+    top_card <- discard[nrow(discard), ]
 
 
     # Checking cards against the top card
     playable_flags <- logical(nrow(hand))
-    for (i in seq_len(nrow(hand))) {            # Looping through each card in players hand
+    for (i in seq_len(nrow(hand))) {
       card <- hand[i, ]
-      playable_flags[i] <- card$color == top_card$color || # Compares card to top card in discard pile
-        card$value == top_card$value ||                    # Checks if it matches by colour, number or is wild card
+      playable_flags[i] <- card$color == top_card$color ||
+        card$value == top_card$value ||
         card$color == "wild"
     }
 
+    # Evaluating and storing the playable cards
     playable <- c()
     for (j in seq_along(playable_flags)) {
       if (playable_flags[j]) {
@@ -120,7 +121,10 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
       }
     }
 
+    # Checking is playable cards are available
     if (length(playable) == 0) {
+
+      # Checking if the deck is exhausted
       if (deck_index > deck_size) {
         return(list(
           winner = NULL,
@@ -129,6 +133,8 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
           reason = "Deck exhausted"
         ))
       }
+
+      # Otherwise, player draws a card from the deck and plays
       hand[nrow(hand) + 1, ] <- deck[deck_index, ]
       deck_index <- deck_index + 1
     } else {
@@ -143,6 +149,7 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
 
       discard[nrow(discard) + 1, ] <- played_card
 
+      # Handling action and wild cards
       if (played_card$value == "skip") {
         turn <- (turn + direction - 1) %% n_players + 1
       } else if (played_card$value == "reverse") {
@@ -174,6 +181,7 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
       }
     }
 
+    # Updating the player's hand and checking for a winner
     hands[[player_name]] <- hand
 
     if (nrow(hand) == 0) {
@@ -184,6 +192,7 @@ play_turns_loop <- function(hands, deck, discard, direction, turn) {
     }
   }
 
+  # Converting the discard pile to a card vector for consistency
   list(
     winner = winner,
     hands = lapply(hands, convert_to_card_vctr),
