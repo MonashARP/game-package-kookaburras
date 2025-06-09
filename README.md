@@ -3,7 +3,7 @@
 
 The `uno` R package simulates a full multiplayer UNO game using realistic card rules and automated gameplay.
 
-Designed as part of the **Monash ETC Advanced R course**, this package allows players to experience turn-by-turn logic, action card effects, and winner detection, all within a reproducible and testable R environment.
+Designed as part of the **Monash ETC Advanced R course**, this package allows players to experience turn-by-turn logic, action and wild card effects, and winner detection, all within a reproducible and testable R environment.
 
 > Developed by Team Kookaburras.
 
@@ -18,7 +18,7 @@ Install the development version directly from GitHub:
 install.packages("devtools")
 
 # Install uno package from GitHub
-devtools::install_github("MonashARP/game-package-kookaburras", subdir = "uno")
+devtools::install_github("MonashARP/game-package-kookaburras")
 ```
 
 ---
