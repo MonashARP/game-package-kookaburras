@@ -6,4 +6,5 @@
 ^pkgdown$
 ^doc$
 ^Meta$
+^\\.github(/.*)?$
 ^LICENSE\.md$
