@@ -7,13 +7,14 @@
 summarise_hand(hands, player)
 }
 \arguments{
-\item{hands}{A named list of card_vctr hands}
+\item{hands}{A named list of `card_vctr` hands.}
 
-\item{player}{A character string, e.g., "Player_1"}
+\item{player}{A character string, e.g., "Player_1".}
 }
 \value{
-A named integer vector with counts of each color
+A named integer vector with counts of each color.
 }
 \description{
-Summarise the hand of a specific player
+Given a named list of player hands, this function summarizes how many cards
+of each color a specific player has.
 }

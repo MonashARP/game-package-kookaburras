@@ -1,8 +1,11 @@
 #' @importFrom vctrs new_vctr vec_data vec_cast vec_ptype2
+#' @importFrom crayon red blue green yellow silver
+
 NULL
 
 #' Create a card vector (custom vctrs class)
 #'
+#' @description Creates a new UNO card vector using a custom vctrs class.
 #' @param x Character vector like "red_3", "blue_skip", etc.
 #' @return A custom `card_vctr` object
 #' @export

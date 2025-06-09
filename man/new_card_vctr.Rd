@@ -13,7 +13,7 @@ new_card_vctr(x = character())
 A custom `card_vctr` object
 }
 \description{
-Create a card vector (custom vctrs class)
+Creates a new UNO card vector using a custom vctrs class.
 }
 \examples{
 new_card_vctr(c("red_3", "blue_skip", "wild_draw4"))

@@ -27,7 +27,7 @@
 #' result$hands$Player_1
 #'
 #' # Check the discard card
-#' result$discard_one
+#' result$discard
 #'
 #' # Number of cards left in the draw pile
 #' nrow(result$deck)
