@@ -154,3 +154,18 @@ Run this before load_all() to fix it:
 This cleans the compiled shared object files and ensures the package compiles correctly with fresh C++ builds. We recommend always using this sequence when updating any .cpp file during development.
 
 # Summary
+
+This UNO package showcases how to build a clean, modular, and beginner friendly game simulation entirely in R, while still allowing for more customisation and better performance. 
+
+- We tried focusing on simplicity in function design. Functions like ` deal_hands()` and `play_turns_loop()` are written with readable logic and intuitive names so that even someone new to R can follow what's happening. Each function focuses on one thing, making the entire code easy to navigate, test, and debug.
+
+- Gameplay is modular and easy to extend. We’ve broken the game into self contained steps: deck creation, hand dealing, turn simulation, and winner detection. This makes it easy for others to change one part (like player logic or turn rules) without breaking the rest.
+
+- We introduced a custom card_vctr class using the vctrs package. This helps enforce type safety across the package, ensuring that a “card” always has a proper UNO like structure (e.g., "red_3", "blue_skip"), and enabling custom printing, formatting, and suit or value extraction logic. This keeps card handling consistent throughout the game.
+
+- C++ support has been added behind the scenes (via Rcpp) to allow future upgrades, for example, fast scoring, AI decision making, or game simulations at scale. 
+
+- ChatGPT played a valuable support role throughout development by helping us and guiding us through errors.
+
+
+By combining tidy R conventions, lightweight S3 object design, and modular logic, with this package tried to provide a good example for anyone looking to simulate turn based logic in R, from card games to process workflows. Whether you're a beginner experimenting with packages or an advanced user wanting to extend it further, the code is built to accommodate both.
