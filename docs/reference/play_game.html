@@ -80,22 +80,100 @@ the deck runs out of cards.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Run a game with 4 players</span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">play_game</span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">play_game</span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $winner</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Player_1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $hands</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $hands$Player_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;card_vctr&gt; (length = 0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> color     | value      | type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------|------------|----------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $hands$Player_2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;card_vctr&gt; (length = 2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> color     | value      | type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------|------------|----------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| 9         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">wild</span>| wild      | wild</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $hands$Player_3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;card_vctr&gt; (length = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> color     | value      | type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------|------------|----------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| reverse   | action</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $hands$Player_4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;card_vctr&gt; (length = 5)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> color     | value      | type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------|------------|----------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">yellow</span>| 8         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 5         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 5         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">yellow</span>| 6         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 8         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $discard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;card_vctr&gt; (length = 43)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> color     | value      | type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------|------------|----------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">yellow</span>| 4         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">yellow</span>| 8         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| 8         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| draw4     | wild</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| 2         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| 9         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 9         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| draw4     | wild</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| 3         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| draw4     | wild</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 6         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 3         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 2         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 3         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 6         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 7         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 1         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 0         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| +2        | action</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">yellow</span>| 9         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">yellow</span>| 7         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">yellow</span>| 0         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">yellow</span>| skip      | action</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">yellow</span>| 1         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 1         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 1         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| +2        | action</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 8         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 3         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 7         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 7         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| 7         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">green</span>| 5         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 2         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 6         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| +2        | action</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 2         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| wild      | wild</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 5         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span>| 9         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 9         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 1         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">blue</span>| 2         | number</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># See the winner</span></span></span>
 <span class="r-in"><span><span class="va">result</span><span class="op">$</span><span class="va">winner</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Player_1"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'result' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Preview the discard pile</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">discard</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;card_vctr[6]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;yellow_4&gt;         &lt;yellow_8&gt;         &lt;green_8&gt;          &lt;green_wild_draw4&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] &lt;green_2&gt;          &lt;green_9&gt;         </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'result' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Check final hand of Player 2</span></span></span>
 <span class="r-in"><span><span class="va">result</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_2</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;card_vctr[2]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] &lt;green_9&gt;   &lt;wild_wild&gt;</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'result' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

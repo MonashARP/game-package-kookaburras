@@ -169,8 +169,15 @@ If the draw pile runs out before that, the game ends in a draw.</p>
 <span></span>
 <span><span class="co"># Discard pile preview</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">discard</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;card_vctr[6]&gt;</span></span>
-<span><span class="co">#&gt; [1] &lt;red_wild&gt; &lt;red_5&gt;    &lt;red_9&gt;    &lt;blue_9&gt;   &lt;blue_1&gt;   &lt;blue_2&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;card_vctr&gt; (length = 6)</span></span>
+<span><span class="co">#&gt; color     | value      | type</span></span>
+<span><span class="co">#&gt; ----------|------------|----------</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| wild      | wild</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 5         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 9         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 9         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 1         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 2         | number</span></span></code></pre></div>
 <p>The game runs automatically until one player wins by emptying their
 hand. All actions (skip, draw, reverse) are handled by the engine.</p>
 <p><strong>Note:</strong> Wild cards (wild, wild_draw4) appear in the
@@ -183,23 +190,60 @@ played a wild and chose green.</p>
 <p>You can inspect any player’s hand:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">hands</span><span class="op">$</span><span class="va">Player_2</span></span>
-<span><span class="co">#&gt; &lt;card_vctr[2]&gt;</span></span>
-<span><span class="co">#&gt; [1] &lt;green_9&gt;   &lt;wild_wild&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;card_vctr&gt; (length = 2)</span></span>
+<span><span class="co">#&gt; color     | value      | type</span></span>
+<span><span class="co">#&gt; ----------|------------|----------</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">green</span>| 9         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">wild</span>| wild      | wild</span></span></code></pre></div>
 <p>Or check the full discard pile history:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">discard</span></span>
-<span><span class="co">#&gt; &lt;card_vctr[43]&gt;</span></span>
-<span><span class="co">#&gt;  [1] &lt;yellow_4&gt;         &lt;yellow_8&gt;         &lt;green_8&gt;          &lt;green_wild_draw4&gt;</span></span>
-<span><span class="co">#&gt;  [5] &lt;green_2&gt;          &lt;green_9&gt;          &lt;red_9&gt;            &lt;green_wild_draw4&gt;</span></span>
-<span><span class="co">#&gt;  [9] &lt;green_3&gt;          &lt;red_wild_draw4&gt;   &lt;red_6&gt;            &lt;blue_3&gt;          </span></span>
-<span><span class="co">#&gt; [13] &lt;blue_2&gt;           &lt;blue_3&gt;           &lt;blue_6&gt;           &lt;blue_7&gt;          </span></span>
-<span><span class="co">#&gt; [17] &lt;blue_1&gt;           &lt;blue_0&gt;           &lt;green_+2&gt;         &lt;yellow_9&gt;        </span></span>
-<span><span class="co">#&gt; [21] &lt;yellow_7&gt;         &lt;yellow_0&gt;         &lt;yellow_skip&gt;      &lt;yellow_1&gt;        </span></span>
-<span><span class="co">#&gt; [25] &lt;red_1&gt;            &lt;red_1&gt;            &lt;red_+2&gt;           &lt;red_8&gt;           </span></span>
-<span><span class="co">#&gt; [29] &lt;red_3&gt;            &lt;red_7&gt;            &lt;red_7&gt;            &lt;green_7&gt;         </span></span>
-<span><span class="co">#&gt; [33] &lt;green_5&gt;          &lt;red_2&gt;            &lt;red_6&gt;            &lt;red_+2&gt;          </span></span>
-<span><span class="co">#&gt; [37] &lt;red_2&gt;            &lt;red_wild&gt;         &lt;red_5&gt;            &lt;red_9&gt;           </span></span>
-<span><span class="co">#&gt; [41] &lt;blue_9&gt;           &lt;blue_1&gt;           &lt;blue_2&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;card_vctr&gt; (length = 43)</span></span>
+<span><span class="co">#&gt; color     | value      | type</span></span>
+<span><span class="co">#&gt; ----------|------------|----------</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">yellow</span>| 4         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">yellow</span>| 8         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">green</span>| 8         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">green</span>| draw4     | wild</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">green</span>| 2         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">green</span>| 9         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 9         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">green</span>| draw4     | wild</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">green</span>| 3         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| draw4     | wild</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 6         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 3         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 2         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 3         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 6         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 7         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 1         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 0         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">green</span>| +2        | action</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">yellow</span>| 9         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">yellow</span>| 7         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">yellow</span>| 0         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">yellow</span>| skip      | action</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">yellow</span>| 1         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 1         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 1         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| +2        | action</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 8         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 3         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 7         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 7         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">green</span>| 7         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">green</span>| 5         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 2         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 6         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| +2        | action</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 2         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| wild      | wild</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 5         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">red</span>| 9         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 9         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 1         | number</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">blue</span>| 2         | number</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

@@ -1,6 +1,5 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://monasharp.github.io/game-package-kookaburras/404.html</loc></url>
-<url><loc>https://monasharp.github.io/game-package-kookaburras/articles/Design_choice.html</loc></url>
 <url><loc>https://monasharp.github.io/game-package-kookaburras/articles/design-choice.html</loc></url>
 <url><loc>https://monasharp.github.io/game-package-kookaburras/articles/index.html</loc></url>
 <url><loc>https://monasharp.github.io/game-package-kookaburras/articles/uno.html</loc></url>
@@ -17,5 +16,6 @@
 <url><loc>https://monasharp.github.io/game-package-kookaburras/reference/play_turns_loop.html</loc></url>
 <url><loc>https://monasharp.github.io/game-package-kookaburras/reference/score_game.html</loc></url>
 <url><loc>https://monasharp.github.io/game-package-kookaburras/reference/setup_game.html</loc></url>
+<url><loc>https://monasharp.github.io/game-package-kookaburras/reference/summarise_hand.html</loc></url>
 </urlset>
 

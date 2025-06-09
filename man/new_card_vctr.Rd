@@ -2,19 +2,35 @@
 % Please edit documentation in R/card_vctr.R
 \name{new_card_vctr}
 \alias{new_card_vctr}
-\title{Create a card vector (custom vctrs class)}
+\title{Construct a custom UNO card vector}
 \usage{
 new_card_vctr(x = character())
 }
 \arguments{
-\item{x}{Character vector like "red_3", "blue_skip", etc.}
+\item{x}{A character vector of UNO-style card strings, typically in the format `"color_value"`
+(e.g., `"yellow_7"`, `"green_reverse"`, `"wild_draw4"`). No validation is done at this stage.}
 }
 \value{
-A custom `card_vctr` object
+An object of class `card_vctr`, which behaves like a typed character vector
+with UNO-specific behavior when passed to helper functions such as `card_suit()` and `card_value()`.
 }
 \description{
-Creates a new UNO card vector using a custom vctrs class.
+This function creates a new UNO card vector using a custom S3 vctrs class called `card_vctr`.
+It stores card values as strings like `"red_3"`, `"blue_skip"`, `"wild"`, or `"wild_draw4"`,
+and enables type-safe operations on UNO cards throughout the package.
+}
+\details{
+Use this constructor when you want to define or manipulate UNO cards directly,
+especially for testing, simulations, or building player hands manually.
 }
 \examples{
 new_card_vctr(c("red_3", "blue_skip", "wild_draw4"))
+
+# Extract suits from these cards
+card_suit(cards)
+
+# Use in a hand summary
+hands <- list(Player_1 = cards)
+summarise_hand(hands, "Player_1")
+
 }

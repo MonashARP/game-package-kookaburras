@@ -16,40 +16,66 @@ knitr::opts_chunk$set(
 
 # Overview
 
-
+This vignette outlines the key design decisions behind our UNO game simulation package. It explains our choices for function names, argument structures, user workflow, internal helper functions, and the use of custom vector classes (vctrs). We also highlight limitations, alternative designs considered, and how generative AI (ChatGPT) supported development. A special note at the end addresses how to avoid known C++ issues during development.
 
 # Function Name Design
 
+We selected clear and self-explanatory function names that reflect each function's purpose — especially important for beginners exploring game simulation in R.
 
+-   **create_uno_deck():** Builds a full UNO deck with all number, action, and wild cards.
+
+-   **deal_hands():** Shuffles the deck and deals 7 cards to each player, returning the initial hands, draw pile, and first discard card.
+
+-   **play_turns_loop():** Handles the core logic of turn-by-turn gameplay using the dealt hands and draw/discard piles.
+
+-   **play_game():** A wrapper function that sets up and runs the full game end-to-end.
+
+-   **summarise_hand():** A helper to count how many cards of each suit (color) a player has.
+
+-   **card_suit():** Extracts the color/suit of a card_vctr object.
+
+-   **new_card_vctr():** Constructor for our custom card_vctr class.
+
+Each function does one thing clearly and is named to match how a human would describe that task in casual conversation — deal cards, play turns, summarize hands, etc.
 
 # Argument Design
 
+Arguments across the package are simple and consistent, prioritizing ease of use:
 
+-   Most functions require intuitive inputs like `deck`, `n_players`, or `hands`.
+
+-   We provide default values where practical, e.g., `n_players = 4` in `deal_hands()` and `play_game()`, to make running a sample game easy without custom setup.
+
+-   Validation is enforced within functions to ensure arguments are of the right type (e.g., `deck` must be a tibble/data.frame, `n_players` must be numeric ≥ 2).
+
+These choices make the package both beginner-friendly and robust against user error.
 
 # User Workflow
 
+Here’s how a typical user would interact with the UNO package, step by step:
 
+-   **Create the UNO deck:** Use `create_uno_deck()` to generate a complete, shuffled UNO deck with all standard number, action, and wild cards.
+
+-   **Deal cards to players:** Call `deal_hands(deck, n_players = 4)` to distribute 7 cards to each player, start the discard pile, and return the draw pile. This is typically the first step of a game.
+
+-   **Play the game:** Use `play_game(n_players = 4)` to simulate a complete UNO game, including card dealing, turn-by-turn play, and automatic handling of draw/discard piles.
+
+-   **Run gameplay manually (advanced users):** For more control, advanced users can use `deal_hands()` and then pass the result into `play_turns_loop()` for a more manual gameplay simulation.
+
+-   **Analyze hands (optional):** Use `summarise_hand(hands, player)` to count how many cards of each suit (color) a specific player has — useful for custom rules or strategy analysis.
+
+-   **Explore card structure:** Use helper functions like `card_suit()` and work with the `card_vctr` class directly to inspect or manipulate card content programmatically.
+
+This design makes the UNO package flexible for both casual users — who can simulate a game in one line — and advanced users, who can build their own gameplay logic and extensions.
 
 # Internal Modular Functions
 
-
-
 # Use of vctrs
-
-
 
 # Limitations
 
-
-
 # Alternative Designs Considered
-
-
 
 # Use of LLM (ChatGPT) Support
 
-
-
 # Summary
-
-

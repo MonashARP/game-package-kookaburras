@@ -2,16 +2,30 @@
 % Please edit documentation in R/card_vctr.R
 \name{card_suit}
 \alias{card_suit}
-\title{Generic to get card suit (e.g., "red", "blue", "wild")}
+\title{Extract the color suit from UNO cards}
 \usage{
 card_suit(x)
 }
 \arguments{
-\item{x}{A card_vctr}
+\item{x}{A `card_vctr` — a custom vector representing UNO cards,
+typically created using `new_card_vctr()` or returned from gameplay functions.}
 }
 \value{
-Character vector of suits
+A character vector of suits corresponding to each card.
+  If `x` contains `"green_3"`, `"red_skip"`, and `"wild_draw4"`,
+  the returned vector will be `"green"`, `"red"`, and `"wild"`.
 }
 \description{
-Generic to get card suit (e.g., "red", "blue", "wild")
+This generic function extracts the suit (or color) of UNO cards
+such as `"red"`, `"blue"`, `"green"`, `"yellow"`, or `"wild"`
+from a `card_vctr` object.
+}
+\details{
+It is useful for analyzing player hands, counting card colors,
+or implementing color-based rules during gameplay.
+}
+\examples{
+cards <- new_card_vctr(c("green_3", "red_skip", "wild_draw4"))
+card_suit(cards)
+
 }

@@ -3,15 +3,32 @@
 
 NULL
 
-#' Create a card vector (custom vctrs class)
+#' Construct a custom UNO card vector
 #'
-#' @description Creates a new UNO card vector using a custom vctrs class.
-#' @param x Character vector like "red_3", "blue_skip", etc.
-#' @return A custom `card_vctr` object
-#' @export
+#' This function creates a new UNO card vector using a custom S3 vctrs class called `card_vctr`.
+#' It stores card values as strings like `"red_3"`, `"blue_skip"`, `"wild"`, or `"wild_draw4"`,
+#' and enables type-safe operations on UNO cards throughout the package.
+#'
+#' Use this constructor when you want to define or manipulate UNO cards directly,
+#' especially for testing, simulations, or building player hands manually.
+#'
+#' @param x A character vector of UNO-style card strings, typically in the format `"color_value"`
+#' (e.g., `"yellow_7"`, `"green_reverse"`, `"wild_draw4"`). No validation is done at this stage.
+#'
+#' @return An object of class `card_vctr`, which behaves like a typed character vector
+#' with UNO-specific behavior when passed to helper functions such as `card_suit()` and `card_value()`.
 #'
 #' @examples
 #' new_card_vctr(c("red_3", "blue_skip", "wild_draw4"))
+#'
+#' # Extract suits from these cards
+#' card_suit(cards)
+#'
+#' # Use in a hand summary
+#' hands <- list(Player_1 = cards)
+#' summarise_hand(hands, "Player_1")
+#'
+#' @export
 new_card_vctr <- function(x = character()) {
   vctrs::new_vctr(x, class = "card_vctr")
 }
@@ -65,10 +82,26 @@ vec_ptype2.card_vctr.card_vctr <- function(x, y, ...) new_card_vctr()
 #' @export
 vec_cast.card_vctr.card_vctr <- function(x, to, ...) new_card_vctr(vctrs::vec_data(x))
 
-#' Generic to get card suit (e.g., "red", "blue", "wild")
+#' Extract the color suit from UNO cards
 #'
-#' @param x A card_vctr
-#' @return Character vector of suits
+#' This generic function extracts the suit (or color) of UNO cards
+#' such as `"red"`, `"blue"`, `"green"`, `"yellow"`, or `"wild"`
+#' from a `card_vctr` object.
+#'
+#' It is useful for analyzing player hands, counting card colors,
+#' or implementing color-based rules during gameplay.
+#'
+#' @param x A `card_vctr` — a custom vector representing UNO cards,
+#'   typically created using `new_card_vctr()` or returned from gameplay functions.
+#'
+#' @return A character vector of suits corresponding to each card.
+#'   If `x` contains `"green_3"`, `"red_skip"`, and `"wild_draw4"`,
+#'   the returned vector will be `"green"`, `"red"`, and `"wild"`.
+#'
+#' @examples
+#' cards <- new_card_vctr(c("green_3", "red_skip", "wild_draw4"))
+#' card_suit(cards)
+#'
 #' @export
 card_suit <- function(x) {
   UseMethod("card_suit")
