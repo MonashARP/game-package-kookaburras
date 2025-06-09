@@ -141,7 +141,10 @@ Thanks to this support, we were able to navigate issues that would have otherwis
 
 # Note on C++ Compilation Errors
 
-If you are developing the package and using C++ code (e.g., via src/card_utils.cpp), you may occasionally face issues with devtools::load_all() failing due to stale or corrupted compiled files.
+If you are developing the package and using C++ code (e.g., via src/card_utils.cpp), you may occasionally face issues with devtools::load_all() failing due to stale or corrupted compiled files. We have observed this particularly when trying to run the 
+package on different OS. 
+
+Currently, the package builds fine on MAC OS but for Windows and other platforms, you may encounter issues with the C++ shared object files not compiling correctly. You can follow the below steps to compile it again locally and run the package without issues.
 
 If you encounter an error like:
 

@@ -17,6 +17,7 @@
 #'
 #' @examples
 #' # Run a game with 4 players
+#' set.seed(123)
 #' result <- play_game(4)
 #'
 #' # See the winner

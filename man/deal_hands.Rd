@@ -31,6 +31,7 @@ This function is typically called during game setup, after generating the deck
 using \code{\link{create_uno_deck}}.
 }
 \examples{
+set.seed(123)
 deck <- create_uno_deck()
 result <- deal_hands(deck, n_players = 4)
 

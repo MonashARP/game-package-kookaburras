@@ -20,6 +20,7 @@
 #' }
 #'
 #' @examples
+#' set.seed(123)
 #' deck <- create_uno_deck()
 #' result <- deal_hands(deck, n_players = 4)
 #'
