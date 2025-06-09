@@ -122,6 +122,23 @@ Each design decision balanced functionality with clarity, especially for beginne
 
 # Use of LLM (ChatGPT) Support
 
+ChatGPT was helpful throughout our development process, especially when we ran into errors. Further we used it in the following ways: 
+
+- Helpful in designing core functions like play_turns_loop() and summarise_hand(). It helped us break down and understand the game logic and thinking through edge cases (like what happens when the deck runs out or a player has no playable cards).
+
+- Debugging persistent C++ linkage errors, we encountered during devtools::load_all() — particularly the “ld: unknown file type in 'card_utils.o'” error. ChatGPT explained that it was a stale compiled object and guided us to use devtools::clean_dll() before rebuilding, which immediately resolved the issue. Further, it explained that the
+issue was due platform based erorr and how the compilation of C++ on MAC OS might differ from Linux or Windows, which helped us understand the underlying cause.
+
+- Clarified confusing devtools errors, such as warnings about undefined exports, and guiding us to properly use @importFrom and adjust the NAMESPACE file. For example, we learned to import setNames from stats after a test failed with no visible global function definition for 'setNames'.
+
+ - Fixing testthat failures, such as when summarise_hand() unexpectedly returned unnamed vectors or zero length outputs. ChatGPT helped us trace the issue to an inconsistent use of card_vctr inputs and suggested type validation or adding test setup examples using new_card_vctr().
+
+- Helping us understand why vignettes weren’t showing up, even though they built successfully. It pointed out that the vignettes need to be inside the top-level vignettes/ folder and that we must install the package with build_vignettes = TRUE or use pkgdown::build_site() to view them properly.
+
+- Providing fallback explanations and context when we got CRAN-style NOTES about .github/.keep, LICENSE.md, or .gitignore-related files. ChatGPT reassured us which ones were safe to ignore and which should be cleaned up for final submission.
+
+Thanks to this support, we were able to navigate issues that would have otherwise required hours of Googling or trial-and-error. ChatGPT helped us stay focused on designing gameplay logic while it handled the frustrating, technical parts like R CMD checks, vignette rendering, and namespace sanity.
+
 # Note on C++ Compilation Errors
 
 If you are developing the package and using C++ code (e.g., via src/card_utils.cpp), you may occasionally face issues with devtools::load_all() failing due to stale or corrupted compiled files.
