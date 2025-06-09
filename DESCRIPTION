@@ -14,8 +14,6 @@ Imports:
   dplyr,
   purrr,
   tibble,
-  tidyr,
-  tidyverse,
   vctrs,
   Rcpp,
   crayon
