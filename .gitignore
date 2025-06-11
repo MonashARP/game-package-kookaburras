@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+docs
+/doc/
+/Meta/
+*.o
+*.so
+src/RcppExports.cpp
+R/RcppExports.R

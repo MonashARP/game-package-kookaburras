@@ -1,0 +1,135 @@
+---
+title: "uno: Multiplayer UNO Game in R"
+author: "Richi Susil Jacob, Pooja Rajendran Raju, Dhanshree Dhrafani"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{uno: Multiplayer UNO Game in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(uno)
+library(dplyr)
+
+```
+
+## Introduction
+
+The uno package lets you simulate a full multiplayer UNO game using realistic rules.
+
+It supports:
+
+-   Full UNO deck generation
+
+-   Dealing hands to players
+
+-   Turn-by-turn play using action and wild cards
+
+-   Winner detection and scoring
+
+## Installation
+
+You can install the development version of uno from GitHub using:
+
+```{r eval=FALSE}
+# Install devtools if not already installed
+install.packages("devtools")
+
+# Install uno from GitHub
+devtools::install_github("MonashARP/game-package-kookaburras")
+```
+
+## Create a Full UNO Deck
+
+```{r}
+deck <- create_uno_deck()
+head(deck)
+nrow(deck)  # Should return 108
+```
+
+This generates a standard 108-card deck including **number cards** (0–9), **action cards** (Skip, Reverse, +2), and **wild cards** (Wild, Wild Draw 4).
+
+## Deal Hands to Players
+
+```{r}
+deal <- deal_hands(deck, n_players = 4)
+
+# Explore hands
+names(deal$hands)
+deal$hands$Player_1
+
+# View discard pile
+deal$discard
+```
+
+Each player is dealt 7 cards. The function returns:
+
+- A named list of player hands
+
+- The updated deck
+
+- A starting discard pile with one card
+
+## How Gameplay Works
+
+The game logic is handled through two main functions:
+
+-**play_game()** – Runs the full game from start to finish
+
+-**play_turns_loop()** – Internal engine that manages turns, checks for playable cards, handles actions, and tracks the winner
+
+The game proceeds automatically until one player finishes all cards. If the draw pile runs out before that, the game ends in a draw.
+
+## Simulate a Full Game
+
+```{r}
+result <- play_game()
+
+# View winner
+result$winner
+
+# Discard pile preview
+tail(result$discard)
+```
+
+The game runs automatically until one player wins by emptying their hand. All actions (skip, draw, reverse) are handled by the engine.
+
+**Note:** Wild cards (wild, wild_draw4) appear in the discard pile with the color selected by the player who played them. For example, a card with value = "wild" and color = "green" means the player played a wild and chose green.
+
+### Access Individual Results
+
+You can inspect any player's hand:
+
+```{r}
+result$hands$Player_2
+```
+
+Or check the full discard pile history:
+
+```{r}
+result$discard
+```
+
+## Available Functions
+
+| Function            | Description                                    |
+| ------------------- | ---------------------------------------------- |
+| `create_uno_deck()` | Generate a 108-card UNO deck                   |
+| `deal_hands()`      | Deal 7 cards to each player                    |
+| `play_game()`       | Full simulation: setup + play to winner        |
+| `play_turns_loop()` | Internal game loop handling each player's turn |
+
+##  What's Next
+
+ - "UNO" call penalty
+
+ - Deck reshuffling when draw pile is exhausted
+
+ - Optional player interactivity (CLI or Shiny)
+
+ - Usage of more than one deck

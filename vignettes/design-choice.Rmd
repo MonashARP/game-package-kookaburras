@@ -1,0 +1,174 @@
+---
+title: "Design Choices"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Design Choices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Overview
+
+This vignette outlines the key design decisions behind our UNO game simulation package. It explains our choices for function names, argument structures, user workflow, internal helper functions, and the use of custom vector classes (vctrs). We also highlight limitations, alternative designs considered, and how generative AI (ChatGPT) supported development. A special note at the end addresses how to avoid known C++ issues during development.
+
+# Function Name Design
+
+We selected clear and self-explanatory function names that reflect each function's purpose — especially important for beginners exploring game simulation in R.
+
+-   **create_uno_deck():** Builds a full UNO deck with all number, action, and wild cards.
+
+-   **deal_hands():** Shuffles the deck and deals 7 cards to each player, returning the initial hands, draw pile, and first discard card.
+
+-   **play_turns_loop():** Handles the core logic of turn-by-turn gameplay using the dealt hands and draw/discard piles.
+
+-   **play_game():** A wrapper function that sets up and runs the full game end-to-end.
+
+-   **summarise_hand():** A helper to count how many cards of each suit (color) a player has.
+
+-   **card_suit():** Extracts the color/suit of a card_vctr object.
+
+-   **new_card_vctr():** Constructor for our custom card_vctr class.
+
+Each function does one thing clearly and is named to match how a human would describe that task in casual conversation — deal cards, play turns, summarize hands, etc.
+
+# Argument Design
+
+Arguments across the package are simple and consistent, prioritizing ease of use:
+
+-   Most functions require intuitive inputs like `deck`, `n_players`, or `hands`.
+
+-   We provide default values where practical, e.g., `n_players = 4` in `deal_hands()` and `play_game()`, to make running a sample game easy without custom setup.
+
+-   Validation is enforced within functions to ensure arguments are of the right type (e.g., `deck` must be a tibble/data.frame, `n_players` must be numeric ≥ 2).
+
+These choices make the package both beginner-friendly and robust against user error.
+
+# User Workflow
+
+Here’s how a typical user would interact with the UNO package, step by step:
+
+-   **Create the UNO deck:** Use `create_uno_deck()` to generate a complete, shuffled UNO deck with all standard number, action, and wild cards.
+
+-   **Deal cards to players:** Call `deal_hands(deck, n_players = 4)` to distribute 7 cards to each player, start the discard pile, and return the draw pile. This is typically the first step of a game.
+
+-   **Play the game:** Use `play_game(n_players = 4)` to simulate a complete UNO game, including card dealing, turn-by-turn play, and automatic handling of draw/discard piles.
+
+-   **Run gameplay manually (advanced users):** For more control, advanced users can use `deal_hands()` and then pass the result into `play_turns_loop()` for a more manual gameplay simulation.
+
+-   **Analyze hands (optional):** Use `summarise_hand(hands, player)` to count how many cards of each suit (color) a specific player has — useful for custom rules or strategy analysis.
+
+-   **Explore card structure:** Use helper functions like `card_suit()` and work with the `card_vctr` class directly to inspect or manipulate card content programmatically.
+
+This design makes the UNO package flexible for both casual users — who can simulate a game in one line — and advanced users, who can build their own gameplay logic and extensions.
+
+# Internal Modular Functions
+
+We structured our package around small, reusable functions to keep logic clean and maintainable:
+
+-   `play_turns_loop()` separates gameplay logic from setup, which allows future extensions like multi-round tracking or rule changes without modifying core setup code.
+
+-   `card_suit()` and `summarise_hand()` allow game logic or user analysis to reference card color counts easily.
+
+This modular design means we can test and update individual parts of the codebase without risking breakage elsewhere. It also makes unit testing straightforward.
+
+# Use of vctrs
+
+We used the vctrs package to create a custom vector class card_vctr. This improves type safety and allows us to define card-specific helper functions like:
+
+-   `card_suit()` — extracts the color (e.g., red, blue, green, yellow, or wild)
+
+-   Future extensions (e.g., `card_value()`, `is_action_card()`) can be added using the same base structure.
+
+The `card_vctr` class ensures that cards are treated as a consistent, domain-specific object type rather than arbitrary strings. This improves error handling, readability, and developer experience.
+
+# Limitations
+
+This version of the package is fully functional but focused on core gameplay. Known limitations include:
+
+-   No support for stacking draw cards or challenging +4s
+
+-   No scoring system across multiple rounds (e.g., traditional 500-point rules)
+
+-   No skip logic for disconnected users or AI players
+
+-   No GUI or Shiny app (yet)
+
+-   No multiplayer input (pure simulation only)
+
+-   No re-entry logic when draw pile is exhausted
+
+These features were intentionally deferred to keep the package simple, focused, and testable.
+
+# Alternative Designs Considered
+
+We explored a few other options during development:
+
+- **Using S4 or R6:** We opted for S3 with vctrs::new_vctr() instead to maintain simplicity and compatibility with tidyverse workflows.
+
+- **Deck as an environment:** We briefly explored mutable decks (environments or reference classes) but chose immutable tibble structures to make debugging and reproducibility easier.
+
+- **Random turn skipping:** Some early versions had randomized skipping logic, which we removed for predictability and fairness.
+
+- **Exporting all helpers:** We kept some internal logic unexported to avoid cluttering the user namespace.
+
+Each design decision balanced functionality with clarity, especially for beginners or students using this as a learning package.
+
+# Use of LLM (ChatGPT) Support
+
+ChatGPT was helpful throughout our development process, especially when we ran into errors. Further we used it in the following ways: 
+
+- Helpful in designing core functions like play_turns_loop() and summarise_hand(). It helped us break down and understand the game logic and thinking through edge cases (like what happens when the deck runs out or a player has no playable cards).
+
+- Debugging persistent C++ linkage errors, we encountered during devtools::load_all() — particularly the “ld: unknown file type in 'card_utils.o'” error. ChatGPT explained that it was a stale compiled object and guided us to use devtools::clean_dll() before rebuilding, which immediately resolved the issue. Further, it explained that the
+issue was due platform based erorr and how the compilation of C++ on MAC OS might differ from Linux or Windows, which helped us understand the underlying cause.
+
+- Clarified confusing devtools errors, such as warnings about undefined exports, and guiding us to properly use @importFrom and adjust the NAMESPACE file. For example, we learned to import setNames from stats after a test failed with no visible global function definition for 'setNames'.
+
+ - Fixing testthat failures, such as when summarise_hand() unexpectedly returned unnamed vectors or zero length outputs. ChatGPT helped us trace the issue to an inconsistent use of card_vctr inputs and suggested type validation or adding test setup examples using new_card_vctr().
+
+- Helping us understand why vignettes weren’t showing up, even though they built successfully. It pointed out that the vignettes need to be inside the top-level vignettes/ folder and that we must install the package with build_vignettes = TRUE or use pkgdown::build_site() to view them properly.
+
+- Providing fallback explanations and context when we got CRAN-style NOTES about .github/.keep, LICENSE.md, or .gitignore-related files. ChatGPT reassured us which ones were safe to ignore and which should be cleaned up for final submission.
+
+Thanks to this support, we were able to navigate issues that would have otherwise required hours of Googling or trial-and-error. ChatGPT helped us stay focused on designing gameplay logic while it handled the frustrating, technical parts like R CMD checks, vignette rendering, and namespace sanity.
+
+# Note on C++ Compilation Errors
+
+If you are developing the package and using C++ code (e.g., via src/card_utils.cpp), you may occasionally face issues with devtools::load_all() failing due to stale or corrupted compiled files. We have observed this particularly when trying to run the 
+package on different OS. 
+
+Currently, the package builds fine on MAC OS but for Windows and other platforms, you may encounter issues with the C++ shared object files not compiling correctly. You can follow the below steps to compile it again locally and run the package without issues.
+
+If you encounter an error like:
+
+`ld: unknown file type in 'card_utils.o'`
+
+Run this before load_all() to fix it:
+
+`devtools::clean_dll() devtools::load_all()`
+
+This cleans the compiled shared object files and ensures the package compiles correctly with fresh C++ builds. We recommend always using this sequence when updating any .cpp file during development.
+
+# Summary
+
+This UNO package showcases how to build a clean, modular, and beginner friendly game simulation entirely in R, while still allowing for more customisation and better performance. 
+
+- We tried focusing on simplicity in function design. Functions like ` deal_hands()` and `play_turns_loop()` are written with readable logic and intuitive names so that even someone new to R can follow what's happening. Each function focuses on one thing, making the entire code easy to navigate, test, and debug.
+
+- Gameplay is modular and easy to extend. We’ve broken the game into self contained steps: deck creation, hand dealing, turn simulation, and winner detection. This makes it easy for others to change one part (like player logic or turn rules) without breaking the rest.
+
+- We introduced a custom card_vctr class using the vctrs package. This helps enforce type safety across the package, ensuring that a “card” always has a proper UNO like structure (e.g., "red_3", "blue_skip"), and enabling custom printing, formatting, and suit or value extraction logic. This keeps card handling consistent throughout the game.
+
+- C++ support has been added behind the scenes (via Rcpp) to allow future upgrades, for example, fast scoring, AI decision making, or game simulations at scale. 
+
+- ChatGPT played a valuable support role throughout development by helping us and guiding us through errors.
+
+
+By combining tidy R conventions, lightweight S3 object design, and modular logic, with this package tried to provide a good example for anyone looking to simulate turn based logic in R, from card games to process workflows. Whether you're a beginner experimenting with packages or an advanced user wanting to extend it further, the code is built to accommodate both.
